@@ -29,6 +29,8 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\'', token));
         CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('"', token));
         CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\n', token));
+        
+        CHECK(!token.ready());
     }
 }
 
