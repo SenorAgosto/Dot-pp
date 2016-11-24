@@ -9,9 +9,18 @@ namespace dot_pp {
     {
         if(c == '\n')
         {
+            token.type(TokenType::comment);
+            token.produce();
+            
             return TokenizerState::Init;
         }
-        
+
+        // ignore carriage returns
+        if(c == '\r')
+        {
+            return TokenizerState::HashLineComment;
+        }
+
         token.append(c);
         return TokenizerState::HashLineComment;
     }
