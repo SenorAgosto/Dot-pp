@@ -15,7 +15,7 @@ namespace dot_pp {
         void append(const char c) { value_.append(1, c); }
         void clear();
         
-        void read() { ready_ = true; }
+        void produce() { ready_ = true; }
         bool ready() const { return ready_; }
         
         bool empty() const { return value_.empty(); }
