@@ -19,7 +19,7 @@ namespace dot_pp {
         bool ready() const { return ready_; }
         
         bool empty() const { return value_.empty(); }
-        std::string to_string() const { return value_; }
+        const std::string& to_string() const { return value_; }
         
         void swap(Token& t);
         
