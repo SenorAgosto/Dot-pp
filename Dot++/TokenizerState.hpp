@@ -8,10 +8,6 @@ namespace dot_pp {
         Init,
         HashLineComment,
         
-        LeftBracket,
-        Equal,
-        RightBracket,
-        
         BeginSlashLineComment,  // first /
         SlashLineComment,       // second /
         

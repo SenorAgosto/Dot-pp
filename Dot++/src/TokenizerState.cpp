@@ -7,9 +7,6 @@ namespace dot_pp {
         switch(state)
         {
         case TokenizerState::Init:                      os << "TokenizerState::Init"; break;
-        case TokenizerState::LeftBracket:               os << "TokenizerState::LeftBracket"; break;
-        case TokenizerState::Equal:                     os << "TokenizerState::Equal"; break;
-        case TokenizerState::RightBracket:              os << "TokenizerState::RightBracket"; break;
         case TokenizerState::HashLineComment:           os << "TokenizerState::HashLineComment"; break;
         case TokenizerState::BeginSlashLineComment:     os << "TokenizerState::BeginSlashLineComment"; break;
         case TokenizerState::SlashLineComment:          os << "TokenizerState::SlashLineComment"; break;
