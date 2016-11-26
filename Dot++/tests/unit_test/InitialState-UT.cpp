@@ -3,6 +3,7 @@
 #include <Dot++/states/InitialState.hpp>
 #include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
 
 #include <deque>
 
@@ -12,10 +13,14 @@ namespace {
     {
         InitStateFixture()
             : nextState(dot_pp::TokenizerState::Init)
+            , info("test.dot")
+            , token(info)
         {
         }
         
         dot_pp::TokenizerState nextState;
+        
+        dot_pp::TokenInfo info;
         dot_pp::Token token;
         
         std::deque<dot_pp::Token> tokens;

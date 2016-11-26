@@ -3,6 +3,7 @@
 #include <Dot++/states/StringLiteralEscapeState.hpp>
 #include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
 
 #include <deque>
 
@@ -10,6 +11,13 @@ namespace {
     
     struct StringLiteralEscapeStateFixture
     {
+        StringLiteralEscapeStateFixture()
+            : info("test.dot")
+            , token(info)
+        {
+        }
+        
+        dot_pp::TokenInfo info;
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
         dot_pp::states::StringLiteralEscapeState state;
