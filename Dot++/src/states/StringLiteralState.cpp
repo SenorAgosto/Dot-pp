@@ -11,6 +11,7 @@ namespace dot_pp {
     {
         if(c == '"')
         {
+            token.type(TokenType::string_literal);
             return produceToken(TokenizerState::Init, tokens, std::move(token));
         }
         
