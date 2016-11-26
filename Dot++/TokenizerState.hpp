@@ -10,8 +10,7 @@ namespace dot_pp {
         
         BeginSlashLineComment,  // first /
         SlashLineComment,       // second /
-        
-        MultiLineEscape,        // \ at the end of a line
+        MultiLineEscape,        // \ at the end of a line // comment line
         
         MultiLineComment,       // * after /, e.g. /*
         EndMultiLineComment,    // * before /, e.g. */
