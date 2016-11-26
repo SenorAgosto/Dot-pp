@@ -1,4 +1,5 @@
 #pragma once 
+#include <deque>
 
 namespace dot_pp {
     class Token;
@@ -11,6 +12,6 @@ namespace dot_pp {
     {
     public:
         virtual ~TokenizerStateInterface() {}
-        virtual TokenizerState consume(const char c, Token& token) const = 0;
+        virtual TokenizerState consume(const char c, Token& token, std::deque<Token>& tokens) const = 0;
     };
 }

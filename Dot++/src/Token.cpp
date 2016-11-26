@@ -4,22 +4,12 @@ namespace dot_pp {
     
     Token::Token()
         : type_(TokenType::string)
-        , ready_(false)
     {
     }
     
-    void Token::clear()
+    Token::Token(const std::string& value, const TokenType type)
+        : value_(value)
+        , type_(type)
     {
-        value_.clear();
-        ready_ = false;
-    }
-    
-    void Token::swap(Token& t)
-    {
-        value_.swap(t.value_);
-        
-        using std::swap;
-        swap(type_, t.type_);
-        swap(ready_, t.ready_);
     }
 }
