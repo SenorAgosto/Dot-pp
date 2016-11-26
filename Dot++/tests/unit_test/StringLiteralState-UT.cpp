@@ -36,6 +36,7 @@ namespace {
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
         CHECK_EQUAL(" a/#[]=\'\n", tokens[0].to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string_literal, tokens[0].type());
     }
     
     TEST_FIXTURE(StringLiteralStateFixture, verifyBackslashMovesToEscapeState)
