@@ -12,7 +12,7 @@ namespace {
     {
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
-        dot_pp::MultiLineCommentState state;
+        dot_pp::states::MultiLineCommentState state;
     };
     
     TEST_FIXTURE(MultiLineCommentStateFixture, verifyInstatiation)

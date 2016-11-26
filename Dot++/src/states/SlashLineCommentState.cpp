@@ -5,7 +5,7 @@
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
     
     TokenizerState SlashLineCommentState::consume(const char c, Token& token, std::deque<Token>& tokens) const
     {
@@ -18,10 +18,11 @@ namespace dot_pp {
         // multiline escape sequance
         if(c == '\\')
         {
+            token.type(TokenType::multiline_comment);
             return TokenizerState::MultiLineEscape;
         }
         
         token.append(c);
         return TokenizerState::SlashLineComment;
     }
-}
+}}

@@ -12,7 +12,7 @@ namespace {
     {
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
-        dot_pp::ErrorState state;
+        dot_pp::states::ErrorState state;
     };
     
     TEST_FIXTURE(ErrorStateFixture, verifyInstatiation)

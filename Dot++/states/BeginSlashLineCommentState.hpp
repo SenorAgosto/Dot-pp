@@ -6,11 +6,11 @@ namespace dot_pp {
     class Token;
 }
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
     
     class BeginSlashLineCommentState : public TokenizerStateInterface
     {
     public:
         TokenizerState consume(const char c, Token& token, std::deque<Token>& tokens) const override;
     };
-}
+}}

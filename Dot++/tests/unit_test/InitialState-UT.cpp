@@ -19,7 +19,7 @@ namespace {
         dot_pp::Token token;
         
         std::deque<dot_pp::Token> tokens;
-        dot_pp::InitialState state;
+        dot_pp::states::InitialState state;
     };
     
     TEST_FIXTURE(InitStateFixture, verifyInstatiation)

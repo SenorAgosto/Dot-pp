@@ -17,7 +17,7 @@ namespace {
         
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
-        dot_pp::BeginSlashLineCommentState state;
+        dot_pp::states::BeginSlashLineCommentState state;
     };
     
     TEST_FIXTURE(BeginSlashLineCommentStateFixture, verifyInstatiation)
