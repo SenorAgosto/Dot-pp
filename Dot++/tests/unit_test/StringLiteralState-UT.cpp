@@ -1,5 +1,6 @@
 #include "./platform/UnitTestSupport.hpp"
 
+#include <Dot++/FileInfo.hpp>
 #include <Dot++/states/StringLiteralState.hpp>
 #include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
@@ -16,7 +17,7 @@ namespace {
         {
         }
         
-        dot_pp::TokenInfo info;
+        dot_pp::FileInfo info;
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
         dot_pp::states::StringLiteralState state;
