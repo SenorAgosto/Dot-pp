@@ -4,11 +4,14 @@
 #include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
 
+#include <deque>
+
 namespace {
     
     struct ErrorStateFixture
     {
         dot_pp::Token token;
+        std::deque<dot_pp::Token> tokens;
         dot_pp::ErrorState state;
     };
     
@@ -18,19 +21,21 @@ namespace {
     
     TEST_FIXTURE(ErrorStateFixture, verifyWeAlwaysStayInErrorState)
     {
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume(' ', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('a', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('/', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('#', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('[', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume(']', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\\', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('=', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\'', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('"', token));
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\n', token));
+        CHECK_EQUAL(0U, tokens.size());
         
-        CHECK(!token.ready());
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume(' ', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('a', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('/', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('#', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('[', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume(']', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\\', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('=', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\'', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('"', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\n', token, tokens));
+        
+        CHECK_EQUAL(0U, tokens.size());
     }
 }
 

@@ -3,16 +3,16 @@
 #include <Dot++/Token.hpp>
 #include <Dot++/TokenizerState.hpp>
 
+#include "./ProduceToken.hpp"
+
 namespace dot_pp {
     
-    TokenizerState HashLineCommentState::consume(const char c, Token& token) const
+    TokenizerState HashLineCommentState::consume(const char c, Token& token, std::deque<Token>& tokens) const
     {
         if(c == '\n')
         {
             token.type(TokenType::comment);
-            token.produce();
-            
-            return TokenizerState::Init;
+            return produceToken(TokenizerState::Init, tokens, std::move(token));
         }
 
         // ignore carriage returns
