@@ -19,7 +19,7 @@ namespace {
     {
     }
     
-    TEST_FIXTURE(HashLineCommentStateFixture, verifyWeAlwaysStayInErrorState)
+    TEST_FIXTURE(HashLineCommentStateFixture, verifyWeAppendToTokenUntilNewLine)
     {
         CHECK_EQUAL(0U, tokens.size());
         
