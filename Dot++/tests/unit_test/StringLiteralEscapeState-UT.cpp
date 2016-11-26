@@ -19,7 +19,7 @@ namespace {
     {
     }
     
-    TEST_FIXTURE(StringLiteralEscapeStateFixture, verifyWeAlwaysStayInErrorState)
+    TEST_FIXTURE(StringLiteralEscapeStateFixture, verifyFunctionality)
     {
         CHECK_EQUAL(0U, tokens.size());
         
