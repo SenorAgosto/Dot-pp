@@ -3,6 +3,7 @@
 #include <Dot++/states/MultiLineEscapeState.hpp>
 #include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
 
 #include <deque>
 
@@ -11,10 +12,12 @@ namespace {
     struct MultiLineEscapeStateFixture
     {
         MultiLineEscapeStateFixture()
-            : token("abc", dot_pp::TokenType::string)
+            : info("test.dot")
+            , token(info, "abc", dot_pp::TokenType::string)
         {
         }
         
+        dot_pp::TokenInfo info;
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
         dot_pp::states::MultiLineEscapeState state;

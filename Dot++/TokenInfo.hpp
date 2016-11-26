@@ -9,7 +9,7 @@ namespace dot_pp {
     public:
         TokenInfo(const std::string& filename);
         TokenInfo(const std::string& filename, const LineInfo& start, const LineInfo& end);
-        
+                
         void start(const LineInfo& lineInfo) { start_ = lineInfo; }
         const LineInfo& start() const { return start_; }
         
@@ -17,7 +17,7 @@ namespace dot_pp {
         const LineInfo& end() const { return end_; }
         
     private:
-        const std::string filename_;
+        std::string filename_;
         
         LineInfo start_;
         LineInfo end_;
