@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Dot++/TokenInfo.hpp>
+#include <Dot++/FileInfo.hpp>
 #include <Dot++/TokenType.hpp>
 #include <string> 
 
@@ -9,12 +9,12 @@ namespace dot_pp {
     class Token
     {
     public:
-        Token(const TokenInfo& info);
-        Token(const TokenInfo& info, const std::string& value, const TokenType type);
+        Token(const FileInfo& info);
+        Token(const FileInfo& info, const std::string& value, const TokenType type);
 
-        void info(const TokenInfo& info) { info_ = info; }
-        const TokenInfo& info() const { return info_; }
-        TokenInfo& info() { return info_; }
+        void info(const FileInfo& info) { info_ = info; }
+        const FileInfo& info() const { return info_; }
+        FileInfo& info() { return info_; }
         
         void type(const TokenType type) { type_ = type; }
         TokenType type() const { return type_; }
@@ -25,7 +25,7 @@ namespace dot_pp {
         const std::string& to_string() const { return value_; }
         
     private:
-        TokenInfo info_;
+        FileInfo info_;
         
         std::string value_;
         TokenType type_;

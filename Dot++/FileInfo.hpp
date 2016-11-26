@@ -4,11 +4,11 @@
 
 namespace dot_pp {
 
-    class TokenInfo
+    class FileInfo
     {
     public:
-        TokenInfo(const std::string& filename);
-        TokenInfo(const std::string& filename, const LineInfo& start, const LineInfo& end);
+        FileInfo(const std::string& filename);
+        FileInfo(const std::string& filename, const LineInfo& start, const LineInfo& end);
                 
         void start(const LineInfo& lineInfo) { start_ = lineInfo; }
         const LineInfo& start() const { return start_; }

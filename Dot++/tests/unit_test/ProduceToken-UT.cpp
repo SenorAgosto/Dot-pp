@@ -1,8 +1,8 @@
 #include "./platform/UnitTestSupport.hpp"
 
+#include <Dot++/FileInfo.hpp>
 #include "Dot++/src/states/ProduceToken.hpp"
 #include <Dot++/Token.hpp>
-#include <Dot++/TokenInfo.hpp>
 #include <Dot++/TokenizerState.hpp>
 
 #include <deque> 
@@ -16,7 +16,7 @@ namespace {
     
     TEST_FIXTURE(ProduceTokenFixture, verifyProduceTokenWithOneArgument)
     {
-        dot_pp::TokenInfo info("test.dot");
+        dot_pp::FileInfo info("test.dot");
         
         CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL(dot_pp::TokenizerState::Init, dot_pp::states::produceToken(dot_pp::TokenizerState::Init, tokens, dot_pp::Token(info)));
