@@ -5,7 +5,7 @@
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
     
     TokenizerState MultiLineEscapeState::consume(const char c, Token& token, std::deque<Token>&) const
     {
@@ -17,4 +17,4 @@ namespace dot_pp {
         
         return TokenizerState::Error;
     }
-}
+}}

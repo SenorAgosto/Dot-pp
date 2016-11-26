@@ -5,7 +5,7 @@
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
     
     TokenizerState BeginSlashLineCommentState::consume(const char c, Token& token, std::deque<Token>& tokens) const
     {
@@ -21,4 +21,4 @@ namespace dot_pp {
         
         return produceToken(TokenizerState::Init, tokens, std::move(token));
     }
-}
+}}

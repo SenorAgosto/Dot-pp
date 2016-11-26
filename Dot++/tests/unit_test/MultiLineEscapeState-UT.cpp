@@ -17,7 +17,7 @@ namespace {
         
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
-        dot_pp::MultiLineEscapeState state;
+        dot_pp::states::MultiLineEscapeState state;
     };
     
     TEST_FIXTURE(MultiLineEscapeStateFixture, verifyInstatiation)

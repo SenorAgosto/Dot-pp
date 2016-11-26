@@ -12,7 +12,7 @@ namespace {
     {
         dot_pp::Token token;
         std::deque<dot_pp::Token> tokens;
-        dot_pp::StringLiteralState state;
+        dot_pp::states::StringLiteralState state;
     };
     
     TEST_FIXTURE(StringLiteralStateFixture, verifyInstatiation)

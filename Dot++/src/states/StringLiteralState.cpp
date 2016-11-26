@@ -5,7 +5,7 @@
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
     
     TokenizerState StringLiteralState::consume(const char c, Token& token, std::deque<Token>& tokens) const
     {
@@ -23,4 +23,4 @@ namespace dot_pp {
         token.append(c);
         return TokenizerState::StringLiteral;
     }
-}
+}}

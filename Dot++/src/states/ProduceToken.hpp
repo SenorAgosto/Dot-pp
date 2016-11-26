@@ -5,7 +5,7 @@
 #include <deque>
 #include <utility>
 
-namespace dot_pp {
+namespace dot_pp { namespace states {
 
     TokenizerState produceToken(const TokenizerState state, std::deque<Token>& tokens, Token&& token);
     
@@ -17,4 +17,4 @@ namespace dot_pp {
         produceToken(state, tokens, std::move(token));
         return produceToken(state, tokens, std::forward<TokenPack>(tokenPack)...);
     }
-}
+}}
