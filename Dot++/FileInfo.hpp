@@ -19,6 +19,7 @@ namespace dot_pp {
         
         void end(const LineInfo& lineInfo) { end_ = lineInfo; }
         const LineInfo& end() const { return end_; }
+        LineInfo& end() { return end_; }
     
     private:
         FileInfo& operator=(const FileInfo& info) = delete;
