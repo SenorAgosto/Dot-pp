@@ -10,7 +10,6 @@ namespace dot_pp {
     public:
         TokenInfo(const Token& token, const FileInfo& info);
         
-        void fileInfo(const FileInfo& info) { fileInfo_ = info; }
         const FileInfo& fileInfo() const { return fileInfo_; }
         FileInfo& fileInfo() { return fileInfo_; }
 
