@@ -13,7 +13,7 @@ namespace dot_pp {
         std::size_t column() const { return column_; }
         
         void incrementColumn() { column_++; }
-        void incrementLine() { line_++; }
+        void incrementLine() { line_++; column_ = 1; }
         
     private:
         std::size_t line_;
