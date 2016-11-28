@@ -8,6 +8,6 @@
 
 namespace dot_pp { namespace states {
 
-    TokenizerState produceToken(const TokenizerState state, const FileInfo& info, std::deque<TokenInfo>& tokens, Token& token);
-    TokenizerState produceToken(const TokenizerState state, const FileInfo& info, std::deque<TokenInfo>& tokens, Token& token, Token&& nextToken);
+    TokenizerState produceToken(const TokenizerState state, std::deque<TokenInfo>& tokens, Token& token, FileInfo& info);
+    TokenizerState produceToken(const TokenizerState state, std::deque<TokenInfo>& tokens, Token& token, FileInfo& info, Token&& nextToken, FileInfo&& nextInfo);
 }}
