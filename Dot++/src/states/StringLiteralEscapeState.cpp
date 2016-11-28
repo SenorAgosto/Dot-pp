@@ -7,7 +7,7 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState StringLiteralEscapeState::consume(const char c, Token& token, std::deque<Token>&) const
+    TokenizerState StringLiteralEscapeState::consume(const char c, FileInfo&, Token& token, std::deque<TokenInfo>&) const
     {
         if(c == '"')
         {

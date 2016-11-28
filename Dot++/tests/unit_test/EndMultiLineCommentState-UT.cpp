@@ -2,8 +2,9 @@
 
 #include <Dot++/FileInfo.hpp>
 #include <Dot++/states/EndMultiLineCommentState.hpp>
-#include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenizerState.hpp>
+#include <Dot++/TokenInfo.hpp>
 
 #include <deque>
 
@@ -13,13 +14,12 @@ namespace {
     {
         EndMultiLineCommentStateFixture()
             : info("test.dot")
-            , token(info)
         {
         }
         
         dot_pp::FileInfo info;
         dot_pp::Token token;
-        std::deque<dot_pp::Token> tokens;
+        std::deque<dot_pp::TokenInfo> tokens;
         dot_pp::states::EndMultiLineCommentState state;
     };
     
@@ -31,21 +31,21 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('a', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('#', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('[', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume(']', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\\', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('=', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\'', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('"', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\n', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('/', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('a', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('#', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('[', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume(']', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\\', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('=', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\'', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('"', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('\n', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('/', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL(" a#[]\\=\'\"\n", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::multiline_comment, tokens[0].type());
+        CHECK_EQUAL(" a#[]\\=\'\"\n", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::multiline_comment, tokens[0].token().type());
     }
 }
 

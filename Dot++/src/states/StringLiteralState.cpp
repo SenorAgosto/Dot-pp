@@ -7,12 +7,12 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState StringLiteralState::consume(const char c, Token& token, std::deque<Token>& tokens) const
+    TokenizerState StringLiteralState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>& tokens) const
     {
         if(c == '"')
         {
             token.type(TokenType::string_literal);
-            return produceToken(TokenizerState::Init, tokens, std::move(token));
+            return produceToken(TokenizerState::Init, info, tokens, token);
         }
         
         if(c == '\\')

@@ -2,16 +2,20 @@
 
 namespace dot_pp {
     
-    Token::Token(const FileInfo& info)
-        : info_(info)
-        , type_(TokenType::string)
+    Token::Token()
+        : type_(TokenType::string)
     {
     }
     
-    Token::Token(const FileInfo& info, const std::string& value, const TokenType type)
-        : info_(info)
-        , value_(value)
+    Token::Token(const std::string& value, const TokenType type)
+        : value_(value)
         , type_(type)
     {
+    }
+    
+    void Token::clear()
+    {
+        value_.clear();
+        type_ = TokenType::string;
     }
 }

@@ -8,22 +8,20 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState InitialState::consume(const char c, Token& token, std::deque<Token>& tokens) const
+    TokenizerState InitialState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>& tokens) const
     {
-        const auto info = token.info();
-        
         switch(c)
         {
-        case '"':   return produceToken(TokenizerState::StringLiteral, tokens, std::move(token));
-        case '[':   return produceToken(TokenizerState::Init, tokens, std::move(token), Token(info, "[", TokenType::l_bracket));
-        case ']':   return produceToken(TokenizerState::Init, tokens, std::move(token), Token(info, "]", TokenType::r_bracket));
-        case '=':   return produceToken(TokenizerState::Init, tokens, std::move(token), Token(info, "=", TokenType::equal));
-        case '#':   return produceToken(TokenizerState::HashLineComment, tokens, std::move(token));
-        case '/':   return produceToken(TokenizerState::SlashLineComment, tokens, std::move(token));
-        case ' ':   return produceToken(TokenizerState::Init, tokens, std::move(token));
-        case '\t':  return produceToken(TokenizerState::Init, tokens, std::move(token));
-        case '\n':  return produceToken(TokenizerState::Init, tokens, std::move(token));
-        case '\r':  return produceToken(TokenizerState::Init, tokens, std::move(token));
+        case '"':   return produceToken(TokenizerState::StringLiteral, info, tokens, token);
+        case '[':   return produceToken(TokenizerState::Init, info, tokens, token, Token("[", TokenType::l_bracket));
+        case ']':   return produceToken(TokenizerState::Init, info, tokens, token, Token("]", TokenType::r_bracket));
+        case '=':   return produceToken(TokenizerState::Init, info, tokens, token, Token("=", TokenType::equal));
+        case '#':   return produceToken(TokenizerState::HashLineComment, info, tokens, token);
+        case '/':   return produceToken(TokenizerState::SlashLineComment, info, tokens, token);
+        case ' ':   return produceToken(TokenizerState::Init, info, tokens, token);
+        case '\t':  return produceToken(TokenizerState::Init, info, tokens, token);
+        case '\n':  return produceToken(TokenizerState::Init, info, tokens, token);
+        case '\r':  return produceToken(TokenizerState::Init, info, tokens, token);
 
         default: break;
         };

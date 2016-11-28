@@ -5,7 +5,7 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState ErrorState::consume(const char, Token&, std::deque<Token>&) const
+    TokenizerState ErrorState::consume(const char, FileInfo&, Token&, std::deque<TokenInfo>&) const
     {
         return TokenizerState::Error;
     }

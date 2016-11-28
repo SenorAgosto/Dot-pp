@@ -1,5 +1,6 @@
 #pragma once
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
 #include <Dot++/TokenizerState.hpp>
 
 #include <deque>
@@ -7,14 +8,6 @@
 
 namespace dot_pp { namespace states {
 
-    TokenizerState produceToken(const TokenizerState state, std::deque<Token>& tokens, Token&& token);
-    
-    // allow multiple tokens to be added to @tokens
-    // e.g. produceToken(TokenizerState::Init, tokens, token1, Token("blah", TokenType::string));
-    template<typename... TokenPack>
-    TokenizerState produceToken(const TokenizerState state, std::deque<Token>& tokens, Token&& token, TokenPack&&... tokenPack)
-    {
-        produceToken(state, tokens, std::move(token));
-        return produceToken(state, tokens, std::forward<TokenPack>(tokenPack)...);
-    }
+    TokenizerState produceToken(const TokenizerState state, const FileInfo& info, std::deque<TokenInfo>& tokens, Token& token);
+    TokenizerState produceToken(const TokenizerState state, const FileInfo& info, std::deque<TokenInfo>& tokens, Token& token, Token&& nextToken);
 }}

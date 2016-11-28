@@ -2,8 +2,9 @@
 
 #include <Dot++/FileInfo.hpp>
 #include <Dot++/states/MultiLineEscapeState.hpp>
-#include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
+#include <Dot++/TokenizerState.hpp>
 
 #include <deque>
 
@@ -13,13 +14,13 @@ namespace {
     {
         MultiLineEscapeStateFixture()
             : info("test.dot")
-            , token(info, "abc", dot_pp::TokenType::string)
+            , token("abc", dot_pp::TokenType::string)
         {
         }
         
         dot_pp::FileInfo info;
         dot_pp::Token token;
-        std::deque<dot_pp::Token> tokens;
+        std::deque<dot_pp::TokenInfo> tokens;
         dot_pp::states::MultiLineEscapeState state;
     };
     
@@ -31,7 +32,7 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::SlashLineComment, state.consume('\n', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::SlashLineComment, state.consume('\n', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL("abc", token.to_string());
@@ -42,7 +43,7 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('o', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('o', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL("abc", token.to_string());

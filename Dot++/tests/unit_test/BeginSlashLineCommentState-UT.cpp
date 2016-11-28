@@ -2,8 +2,9 @@
 
 #include <Dot++/FileInfo.hpp>
 #include <Dot++/states/BeginSlashLineCommentState.hpp>
-#include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
+#include <Dot++/TokenizerState.hpp>
 
 #include <deque>
 
@@ -13,13 +14,13 @@ namespace {
     {
         BeginSlashLineCommentStateFixture()
             : info("test.dot")
-            , token(info, "abc", dot_pp::TokenType::string)
+            , token("abc", dot_pp::TokenType::string)
         {
         }
         
         dot_pp::FileInfo info;
         dot_pp::Token token;
-        std::deque<dot_pp::Token> tokens;
+        std::deque<dot_pp::TokenInfo> tokens;
         dot_pp::states::BeginSlashLineCommentState state;
     };
     
@@ -31,33 +32,33 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::SlashLineComment, state.consume('/', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::SlashLineComment, state.consume('/', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL("abc", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].type());
+        CHECK_EQUAL("abc", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
     }
     
     TEST_FIXTURE(BeginSlashLineCommentStateFixture, verifyStarMovesUsToMultiLineComment)
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('*', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::MultiLineComment, state.consume('*', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL("abc", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].type());
+        CHECK_EQUAL("abc", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
     }
     
     TEST_FIXTURE(BeginSlashLineCommentStateFixture, verifyEverythingElseMovesUsToInit)
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('a', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('a', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL("abc", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].type());
+        CHECK_EQUAL("abc", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
     }
 }
 
