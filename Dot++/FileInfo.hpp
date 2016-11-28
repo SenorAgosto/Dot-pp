@@ -4,6 +4,7 @@
 
 namespace dot_pp {
 
+    // Information about where a token starts and ends
     class FileInfo
     {
     public:
