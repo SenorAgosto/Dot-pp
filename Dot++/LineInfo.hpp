@@ -19,4 +19,8 @@ namespace dot_pp {
         std::size_t line_;
         std::size_t column_;
     };
+    
+    bool operator<(const LineInfo& lhs, const LineInfo& rhs);
+    bool operator==(const LineInfo& lhs, const LineInfo& rhs);
+    bool operator>(const LineInfo& lhs, const LineInfo& rhs);
 }

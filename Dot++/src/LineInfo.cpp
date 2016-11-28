@@ -13,4 +13,23 @@ namespace dot_pp {
         , column_(column)
     {
     }
+    
+    bool operator<(const LineInfo& lhs, const LineInfo& rhs)
+    {
+        return lhs.line() == rhs.line() ?
+            lhs.column() < rhs.column() :
+            lhs.line() < rhs.line();
+    }
+    
+    bool operator==(const LineInfo& lhs, const LineInfo& rhs)
+    {
+        return (lhs.line() == rhs.line()) && (lhs.column() == rhs.column());
+    }
+    
+    bool operator>(const LineInfo& lhs, const LineInfo& rhs)
+    {
+        return lhs.line() == rhs.line() ?
+            lhs.column() > rhs.column() :
+            lhs.line() > rhs.line();
+    }
 }
