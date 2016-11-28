@@ -8,18 +8,24 @@ namespace dot_pp {
     {
     public:
         FileInfo(const std::string& filename);
+        FileInfo(const std::string& filename, const LineInfo& start);
         FileInfo(const std::string& filename, const LineInfo& start, const LineInfo& end);
-                
-        void start(const LineInfo& lineInfo) { start_ = lineInfo; }
+    
+        FileInfo(const FileInfo& info);
+        FileInfo(FileInfo&& info);
+        
         const LineInfo& start() const { return start_; }
         
         void end(const LineInfo& lineInfo) { end_ = lineInfo; }
         const LineInfo& end() const { return end_; }
+    
+    private:
+        FileInfo& operator=(const FileInfo& info) = delete;
         
     private:
         std::string filename_;
         
-        LineInfo start_;
+        const LineInfo start_;
         LineInfo end_;
     };
 }
