@@ -14,6 +14,12 @@ namespace dot_pp {
     {
     }
     
+    std::ostream& operator<<(std::ostream& os, const LineInfo& info)
+    {
+        os << info.line() << ":" << info.column();
+        return os;
+    }
+    
     bool operator<(const LineInfo& lhs, const LineInfo& rhs)
     {
         return lhs.line() == rhs.line() ?

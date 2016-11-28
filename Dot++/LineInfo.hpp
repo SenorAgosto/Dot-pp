@@ -1,5 +1,6 @@
 #pragma once 
 #include <cstddef>
+#include <ostream>
 
 namespace dot_pp {
 
@@ -19,6 +20,8 @@ namespace dot_pp {
         std::size_t line_;
         std::size_t column_;
     };
+    
+    std::ostream& operator<<(std::ostream& os, const LineInfo& info);
     
     bool operator<(const LineInfo& lhs, const LineInfo& rhs);
     bool operator==(const LineInfo& lhs, const LineInfo& rhs);
