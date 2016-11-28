@@ -14,6 +14,7 @@ namespace dot_pp {
         std::size_t column() const { return column_; }
         
         void incrementColumn() { column_++; }
+        void incrementColumnBy(const std::size_t count) { column_ += count; }
         void incrementLine() { line_++; column_ = 1; }
         
     private:

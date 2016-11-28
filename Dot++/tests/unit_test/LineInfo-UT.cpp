@@ -23,6 +23,30 @@ namespace {
         CHECK_EQUAL(20U, li2.column());
     }
     
+    TEST_FIXTURE(LineInfoFixture, verifyIncrementColumn)
+    {
+        CHECK_EQUAL(1U, li.column());
+        
+        li.incrementColumn();
+        CHECK_EQUAL(2U, li.column());
+    }
+
+    TEST_FIXTURE(LineInfoFixture, verifyIncrementColumnBy)
+    {
+        CHECK_EQUAL(1U, li.column());
+        
+        li.incrementColumnBy(20);
+        CHECK_EQUAL(21U, li.column());
+    }
+    
+    TEST_FIXTURE(LineInfoFixture, verifyIncrementLine)
+    {
+        CHECK_EQUAL(1U, li.line());
+        
+        li.incrementLine();
+        CHECK_EQUAL(2U, li.line());
+    }
+    
     TEST_FIXTURE(LineInfoFixture, verifyOStream)
     {
         std::stringstream ss;
