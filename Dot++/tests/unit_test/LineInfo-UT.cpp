@@ -23,6 +23,19 @@ namespace {
         CHECK_EQUAL(20U, li2.column());
     }
     
+    TEST_FIXTURE(LineInfoFixture, verifyOStream)
+    {
+        std::stringstream ss;
+        ss << li;
+        
+        CHECK_EQUAL("1:1", ss.str());
+        
+        std::stringstream ss2;
+        ss2 << li2;
+        
+        CHECK_EQUAL("100:20", ss2.str());
+    }
+    
     TEST_FIXTURE(LineInfoFixture, verifyLessThan)
     {
         CHECK(li < li2);
