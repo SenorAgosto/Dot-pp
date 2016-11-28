@@ -3,8 +3,8 @@
 namespace dot_pp {
 
     LineInfo::LineInfo()
-        : line_(0)
-        , column_(0)
+        : line_(1)
+        , column_(1)
     {
     }
 
