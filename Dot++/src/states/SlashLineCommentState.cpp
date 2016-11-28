@@ -7,12 +7,12 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState SlashLineCommentState::consume(const char c, Token& token, std::deque<Token>& tokens) const
+    TokenizerState SlashLineCommentState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>& tokens) const
     {
         if(c == '\n')
         {
             token.type(TokenType::comment);
-            return produceToken(TokenizerState::Init, tokens, std::move(token));
+            return produceToken(TokenizerState::Init, info, tokens, token);
         }
         
         // multiline escape sequance

@@ -2,8 +2,9 @@
 
 #include <Dot++/FileInfo.hpp>
 #include <Dot++/states/HashLineCommentState.hpp>
-#include <Dot++/TokenizerState.hpp>
 #include <Dot++/Token.hpp>
+#include <Dot++/TokenInfo.hpp>
+#include <Dot++/TokenizerState.hpp>
 
 #include <deque>
 
@@ -13,13 +14,12 @@ namespace {
     {
         HashLineCommentStateFixture()
             : info("test.dot")
-            , token(info)
         {
         }
         
         dot_pp::FileInfo info;
         dot_pp::Token token;
-        std::deque<dot_pp::Token> tokens;
+        std::deque<dot_pp::TokenInfo> tokens;
         dot_pp::states::HashLineCommentState state;
     };
     
@@ -31,65 +31,65 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('a', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('/', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('#', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('[', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(']', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\\', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('=', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\'', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('"', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('a', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('/', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('#', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('[', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(']', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\\', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('=', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\'', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('"', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL(" a/#[]\\=\'\"", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL(" a/#[]\\=\'\"", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::comment, tokens[0].token().type());
     }
     
     TEST_FIXTURE(HashLineCommentStateFixture, verifyTokenProduction)
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('t', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('h', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('i', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('i', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('a', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('c', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('o', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('m', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('m', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('e', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('n', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('t', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('t', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('h', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('i', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('i', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('a', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('c', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('o', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('m', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('m', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('e', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('n', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('t', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', info, token, tokens));
 
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL(" this is a comment", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL(" this is a comment", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::comment, tokens[0].token().type());
     }
     
     TEST_FIXTURE(HashLineCommentStateFixture, verifyCarriageReturnIsIgnored)
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('y', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('e', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\r', token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('y', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('e', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('s', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::HashLineComment, state.consume('\r', info, token, tokens));
+        CHECK_EQUAL(dot_pp::TokenizerState::Init, state.consume('\n', info, token, tokens));
 
         REQUIRE CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL("yes", tokens[0].to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL("yes", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::comment, tokens[0].token().type());
     }
 }
 

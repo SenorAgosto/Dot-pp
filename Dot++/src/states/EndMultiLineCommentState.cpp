@@ -7,12 +7,12 @@
 
 namespace dot_pp { namespace states {
     
-    TokenizerState EndMultiLineCommentState::consume(const char c, Token& token, std::deque<Token>& tokens) const
+    TokenizerState EndMultiLineCommentState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>& tokens) const
     {
         if(c == '/')
         {
             token.type(TokenType::multiline_comment);
-            return produceToken(TokenizerState::Init, tokens, std::move(token));
+            return produceToken(TokenizerState::Init, info, tokens, token);
         }
         
         token.append(c);

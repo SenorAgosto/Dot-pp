@@ -9,12 +9,8 @@ namespace dot_pp {
     class Token
     {
     public:
-        Token(const FileInfo& info);
-        Token(const FileInfo& info, const std::string& value, const TokenType type);
-
-        void info(const FileInfo& info) { info_ = info; }
-        const FileInfo& info() const { return info_; }
-        FileInfo& info() { return info_; }
+        Token();
+        Token(const std::string& value, const TokenType type);
         
         void type(const TokenType type) { type_ = type; }
         TokenType type() const { return type_; }
@@ -24,9 +20,9 @@ namespace dot_pp {
         bool empty() const { return value_.empty(); }
         const std::string& to_string() const { return value_; }
         
-    private:
-        FileInfo info_;
+        void clear();
         
+    private:
         std::string value_;
         TokenType type_;
     };
