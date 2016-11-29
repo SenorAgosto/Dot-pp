@@ -16,6 +16,8 @@ namespace dot_pp { namespace states {
         case '[':   return produceToken(TokenizerState::Init, tokens, token, info, Token("[", TokenType::l_bracket));
         case ']':   return produceToken(TokenizerState::Init, tokens, token, info, Token("]", TokenType::r_bracket));
         case '=':   return produceToken(TokenizerState::Init, tokens, token, info, Token("=", TokenType::equal));
+        case '{':   return produceToken(TokenizerState::Init, tokens, token, info, Token("{", TokenType::l_paren));
+        case '}':   return produceToken(TokenizerState::Init, tokens, token, info, Token("}", TokenType::r_paren));
         case '#':   return produceToken(TokenizerState::HashLineComment, tokens, token, info);
         case '/':   return produceToken(TokenizerState::SlashLineComment, tokens, token, info);
         case ' ':   return produceToken(TokenizerState::Init, tokens, token, info);
