@@ -18,6 +18,7 @@ namespace dot_pp {
         l_bracket,              // [
         r_bracket,              // ]
         equal,                  // =
+        end_statement,          // ;
         
         comment,
         multiline_comment,
