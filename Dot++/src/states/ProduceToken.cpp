@@ -4,13 +4,13 @@ namespace dot_pp { namespace states {
     
     namespace {
         inline
-        bool isDirectedArrow(const Token& token)
+        bool isDirectedEdge(const Token& token)
         {
             return token.to_string() == "->";
         }
         
         inline
-        bool isUndirectedArrow(const Token& token)
+        bool isEdge(const Token& token)
         {
             return token.to_string() == "--";
         }
@@ -18,13 +18,13 @@ namespace dot_pp { namespace states {
         inline
         void adjustTokenType(Token& token)
         {
-            if(isDirectedArrow(token))
+            if(isDirectedEdge(token))
             {
-                token.type(TokenType::arrow);
+                token.type(TokenType::directed_edge);
             }
-            else if(isUndirectedArrow(token))
+            else if(isEdge(token))
             {
-                token.type(TokenType::bidirectional_arrow);
+                token.type(TokenType::edge);
             }
         }
     }
