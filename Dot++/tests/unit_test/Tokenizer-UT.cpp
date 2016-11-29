@@ -24,7 +24,7 @@ namespace {
     TEST_FIXTURE(TokenizerFixture, verifyTokenizationOfWhitespace)
     {
         std::stringstream ss;
-        ss << "    \t \n\t   \t";
+        ss << "    \t \n\r\t   \t";
         
         for(const auto c : ss.str())
         {
