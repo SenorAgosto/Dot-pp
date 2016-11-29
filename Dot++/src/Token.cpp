@@ -13,6 +13,24 @@ namespace dot_pp {
     {
     }
     
+    bool Token::empty() const
+    {
+        if(type_ == TokenType::string_literal)
+        {
+            return false;
+        }
+        
+        for(const auto c : value_)
+        {
+            if((c != '\n') && (c != '\r') && (c != '\t') && (c != ' '))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     void Token::clear()
     {
         value_.clear();
