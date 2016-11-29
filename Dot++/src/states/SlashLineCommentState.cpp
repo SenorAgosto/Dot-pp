@@ -12,7 +12,7 @@ namespace dot_pp { namespace states {
         if(c == '\n')
         {
             token.type(TokenType::comment);
-            return produceToken(TokenizerState::Init, info, tokens, token);
+            return produceToken(TokenizerState::Init, tokens, token, info);
         }
         
         // multiline escape sequance

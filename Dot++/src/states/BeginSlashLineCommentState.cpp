@@ -13,14 +13,14 @@ namespace dot_pp { namespace states {
     {
         if(c == '/')
         {
-            return produceToken(TokenizerState::SlashLineComment, info, tokens, token);
+            return produceToken(TokenizerState::SlashLineComment, tokens, token, info);
         }
         
         if(c == '*')
         {
-            return produceToken(TokenizerState::MultiLineComment, info, tokens, token);
+            return produceToken(TokenizerState::MultiLineComment, tokens, token, info);
         }
         
-        return produceToken(TokenizerState::Init, info, tokens, token);
+        return produceToken(TokenizerState::Init, tokens, token, info);
     }
 }}

@@ -12,7 +12,7 @@ namespace dot_pp { namespace states {
         if(c == '"')
         {
             token.type(TokenType::string_literal);
-            return produceToken(TokenizerState::Init, info, tokens, token);
+            return produceToken(TokenizerState::Init, tokens, token, info);
         }
         
         if(c == '\\')
