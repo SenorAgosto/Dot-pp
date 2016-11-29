@@ -17,7 +17,7 @@ namespace dot_pp {
 
         void append(const char c) { value_.append(1, c); }
         
-        bool empty() const { return value_.empty(); }
+        bool empty() const;
         const std::string& to_string() const { return value_; }
         
         void clear();
