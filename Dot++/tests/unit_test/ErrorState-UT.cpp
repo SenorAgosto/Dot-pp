@@ -44,6 +44,11 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenizerState::Error, state.consume('\n', info, token, tokens));
         
         CHECK_EQUAL(0U, tokens.size());
+        
+        CHECK_EQUAL(1U, info.start().line());
+        CHECK_EQUAL(1U, info.start().column());
+        CHECK_EQUAL(1U, info.end().line());
+        CHECK_EQUAL(1U, info.end().column());
     }
 }
 
