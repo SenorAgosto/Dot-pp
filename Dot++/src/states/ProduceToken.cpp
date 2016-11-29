@@ -17,6 +17,7 @@ namespace dot_pp { namespace states {
         tokens.emplace_back(token, info);
         token.clear();
         
+        info.start() = info.end();
         info.advanceBy(nextToken);
         tokens.emplace_back(nextToken, info);
         

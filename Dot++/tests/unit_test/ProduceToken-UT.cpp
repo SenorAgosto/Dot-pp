@@ -31,18 +31,33 @@ namespace {
         CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL(dot_pp::TokenizerState::Init, dot_pp::states::produceToken(dot_pp::TokenizerState::Init, tokens, token, info));
         
-        CHECK_EQUAL(1U, tokens.size());
-        CHECK_EQUAL(1U, info.start().line());
-        CHECK_EQUAL(1U, info.start().column());
-        CHECK_EQUAL(1U, info.end().line());
-        CHECK_EQUAL(8U, info.end().column());
+        REQUIRE CHECK_EQUAL(1U, tokens.size());
+        
+        CHECK_EQUAL("abcdefg", tokens[0].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().line());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().column());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().end().line());
+        CHECK_EQUAL(8U, tokens[0].fileInfo().end().column());
+        
         
         CHECK_EQUAL(dot_pp::TokenizerState::Init, dot_pp::states::produceToken(dot_pp::TokenizerState::Init, tokens, token2, info, dot_pp::Token()));
 
         CHECK_EQUAL(3U, tokens.size());
-        CHECK_EQUAL(1U, info.start().line());
-        CHECK_EQUAL(1U, info.start().column());
-        CHECK_EQUAL(2U, info.end().line());
-        CHECK_EQUAL(4U, info.end().column());
+        
+        CHECK_EQUAL("abc\nabc", tokens[1].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::multiline_comment, tokens[1].token().type());
+        CHECK_EQUAL(1U, tokens[1].fileInfo().start().line());
+        CHECK_EQUAL(1U, tokens[1].fileInfo().start().column());
+        CHECK_EQUAL(2U, tokens[1].fileInfo().end().line());
+        CHECK_EQUAL(4U, tokens[1].fileInfo().end().column());
+        
+        CHECK_EQUAL("", tokens[2].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[2].token().type());
+        CHECK(tokens[2].fileInfo().empty());
+        CHECK_EQUAL(2U, tokens[2].fileInfo().start().line());
+        CHECK_EQUAL(4U, tokens[2].fileInfo().start().column());
+        CHECK_EQUAL(2U, tokens[2].fileInfo().end().line());
+        CHECK_EQUAL(4U, tokens[2].fileInfo().end().column());
     }
 }

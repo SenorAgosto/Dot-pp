@@ -22,8 +22,12 @@ namespace dot_pp {
         FileInfo(FileInfo&& info);
         
         const std::string& filename() const { return filename_; }
-        const LineInfo& start() const { return start_; }
+    
         const LineInfo& end() const { return end_; }
+        LineInfo& end() { return end_; }
+        
+        const LineInfo& start() const { return start_; }
+        LineInfo& start() { return start_; }
         
         void incrementLine() { end_.incrementLine(); }
         void incrementColumn() { end_.incrementColumn(); }
@@ -38,7 +42,7 @@ namespace dot_pp {
     private:
         std::string filename_;
         
-        const LineInfo start_;
+        LineInfo start_;
         LineInfo end_;
     };
 }
