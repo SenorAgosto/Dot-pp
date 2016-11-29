@@ -7,7 +7,7 @@ namespace dot_pp {
         , edgeStyle_("--")
     {
     }
-            
+
     void SerializationPolicy::createGraph(const std::string& name)
     {
         stream_ << "graph " << name << (name.empty() ? "" : " ") << "{\n";
