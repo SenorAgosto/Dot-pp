@@ -50,7 +50,7 @@ namespace {
         REQUIRE CHECK_EQUAL(12U, tokens.size());
         
         CHECK_EQUAL("digraph", tokens[0].token().to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
+        CHECK_EQUAL(dot_pp::TokenType::keyword, tokens[0].token().type());
         
         CHECK_EQUAL("test", tokens[1].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[1].token().type());

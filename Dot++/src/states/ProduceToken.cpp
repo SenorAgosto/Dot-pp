@@ -16,6 +16,12 @@ namespace dot_pp { namespace states {
         }
         
         inline
+        bool isKeyword(const Token& token)
+        {
+            return token.to_string() == "digraph" || token.to_string() == "graph";
+        }
+        
+        inline
         void adjustTokenType(Token& token)
         {
             if(isDirectedEdge(token))
@@ -25,6 +31,10 @@ namespace dot_pp { namespace states {
             else if(isEdge(token))
             {
                 token.type(TokenType::edge);
+            }
+            else if(isKeyword(token))
+            {
+                token.type(TokenType::keyword);
             }
         }
     }
