@@ -1,6 +1,12 @@
 #pragma once 
 #include <Dot++/LineInfo.hpp>
+
+#include <cstddef>
 #include <string>
+
+namespace dot_pp {
+    class Token;
+}
 
 namespace dot_pp {
 
@@ -15,12 +21,17 @@ namespace dot_pp {
         FileInfo(const FileInfo& info);
         FileInfo(FileInfo&& info);
         
+        const std::string& filename() const { return filename_; }
         const LineInfo& start() const { return start_; }
-        
-        void end(const LineInfo& lineInfo) { end_ = lineInfo; }
         const LineInfo& end() const { return end_; }
-        LineInfo& end() { return end_; }
-    
+        
+        void incrementLine() { end_.incrementLine(); }
+        void incrementColumn() { end_.incrementColumn(); }
+        void incrementColumnBy(const std::size_t count) { end_.incrementColumnBy(count); }
+        void advanceBy(const Token& token);
+        
+        bool empty() const { return start_ == end_; }
+        
     private:
         FileInfo& operator=(const FileInfo& info) = delete;
         
