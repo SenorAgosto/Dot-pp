@@ -36,6 +36,7 @@ namespace {
         
         CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL(" \"", token.to_string());
+        CHECK(info.empty());    // token not yet generated, empty
     }
 }
 

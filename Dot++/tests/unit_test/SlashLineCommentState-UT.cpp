@@ -39,6 +39,11 @@ namespace {
         REQUIRE CHECK_EQUAL(1U, tokens.size());
         CHECK_EQUAL("abc", tokens[0].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::comment, tokens[0].token().type());
+        
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().line());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().column());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().end().line());
+        CHECK_EQUAL(4U, tokens[0].fileInfo().end().column());
     }
     
     TEST_FIXTURE(SlashLineCommentStateFixture, verifyLineEscapeMovesUsToMultiLineEscape)
@@ -51,6 +56,7 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenizerState::MultiLineEscape, state.consume('\\', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(0U, tokens.size());
+        CHECK(info.empty()); // token not yet generated, empty
     }
 }
 

@@ -45,6 +45,11 @@ namespace {
         REQUIRE CHECK_EQUAL(1U, tokens.size());
         CHECK_EQUAL(" a/#[]=\'\n", tokens[0].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string_literal, tokens[0].token().type());
+        
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().line());
+        CHECK_EQUAL(1U, tokens[0].fileInfo().start().column());
+        CHECK_EQUAL(2U, tokens[0].fileInfo().end().line());     // the last input is \n, puts us on 2nd line 1st column
+        CHECK_EQUAL(1U, tokens[0].fileInfo().end().column());
     }
     
     TEST_FIXTURE(StringLiteralStateFixture, verifyBackslashMovesToEscapeState)
