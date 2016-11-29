@@ -17,10 +17,7 @@ namespace dot_pp {
         FileInfo(const std::string& filename);
         FileInfo(const std::string& filename, const LineInfo& start);
         FileInfo(const std::string& filename, const LineInfo& start, const LineInfo& end);
-    
-        FileInfo(const FileInfo& info);
-        FileInfo(FileInfo&& info);
-        
+            
         const std::string& filename() const { return filename_; }
     
         const LineInfo& end() const { return end_; }
@@ -35,9 +32,6 @@ namespace dot_pp {
         void advanceBy(const Token& token);
         
         bool empty() const { return start_ == end_; }
-        
-    private:
-        FileInfo& operator=(const FileInfo& info) = delete;
         
     private:
         std::string filename_;
