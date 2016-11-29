@@ -11,8 +11,8 @@ namespace dot_pp {
         case TokenType::keyword:                return os << "TokenType::keyword";
         case TokenType::l_paren:                return os << "TokenType::l_paren";
         case TokenType::r_paren:                return os << "TokenType::r_paren";
-        case TokenType::bidirectional_arrow:    return os << "TokenType::bidirectional_arrow";
-        case TokenType::arrow:                  return os << "TokenType::arrow";
+        case TokenType::edge:                   return os << "TokenType::edge";
+        case TokenType::directed_edge:          return os << "TokenType::directed_edge";
         case TokenType::l_bracket:              return os << "TokenType::l_bracket";
         case TokenType::r_bracket:              return os << "TokenType::r_bracket";
         case TokenType::equal:                  return os << "TokenType::equal";

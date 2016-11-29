@@ -12,8 +12,8 @@ namespace dot_pp {
         
         l_paren,                // {
         r_paren,                // }
-        bidirectional_arrow,    // --
-        arrow,                  // ->
+        edge,                   // --
+        directed_edge,          // ->
 
         l_bracket,              // [
         r_bracket,              // ]
