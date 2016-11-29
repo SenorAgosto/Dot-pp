@@ -23,21 +23,7 @@ namespace dot_pp {
         , end_(end)
     {
     }
-    
-    FileInfo::FileInfo(const FileInfo& info)
-        : filename_(info.filename_)
-        , start_(info.start_)
-        , end_(info.end_)
-    {
-    }
-    
-    FileInfo::FileInfo(FileInfo&& info)
-        : filename_(std::move(info.filename_))
-        , start_(info.start_)
-        , end_(std::move(info.end_))
-    {
-    }
-    
+
     void FileInfo::advanceBy(const Token& token)
     {
         for(const auto c : token.to_string())
