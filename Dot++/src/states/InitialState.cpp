@@ -12,16 +12,16 @@ namespace dot_pp { namespace states {
     {
         switch(c)
         {
-        case '"':   return produceToken(TokenizerState::StringLiteral, info, tokens, token);
-        case '[':   return produceToken(TokenizerState::Init, info, tokens, token, Token("[", TokenType::l_bracket));
-        case ']':   return produceToken(TokenizerState::Init, info, tokens, token, Token("]", TokenType::r_bracket));
-        case '=':   return produceToken(TokenizerState::Init, info, tokens, token, Token("=", TokenType::equal));
-        case '#':   return produceToken(TokenizerState::HashLineComment, info, tokens, token);
-        case '/':   return produceToken(TokenizerState::SlashLineComment, info, tokens, token);
-        case ' ':   return produceToken(TokenizerState::Init, info, tokens, token);
-        case '\t':  return produceToken(TokenizerState::Init, info, tokens, token);
-        case '\n':  return produceToken(TokenizerState::Init, info, tokens, token);
-        case '\r':  return produceToken(TokenizerState::Init, info, tokens, token);
+        case '"':   return produceToken(TokenizerState::StringLiteral, tokens, token, info);
+        case '[':   return produceToken(TokenizerState::Init, tokens, token, info, Token("[", TokenType::l_bracket));
+        case ']':   return produceToken(TokenizerState::Init, tokens, token, info, Token("]", TokenType::r_bracket));
+        case '=':   return produceToken(TokenizerState::Init, tokens, token, info, Token("=", TokenType::equal));
+        case '#':   return produceToken(TokenizerState::HashLineComment, tokens, token, info);
+        case '/':   return produceToken(TokenizerState::SlashLineComment, tokens, token, info);
+        case ' ':   return produceToken(TokenizerState::Init, tokens, token, info);
+        case '\t':  return produceToken(TokenizerState::Init, tokens, token, info);
+        case '\n':  return produceToken(TokenizerState::Init, tokens, token, info);
+        case '\r':  return produceToken(TokenizerState::Init, tokens, token, info);
 
         default: break;
         };
