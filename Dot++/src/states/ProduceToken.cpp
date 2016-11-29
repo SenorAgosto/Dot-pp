@@ -4,19 +4,21 @@ namespace dot_pp { namespace states {
     
     TokenizerState produceToken(const TokenizerState state, std::deque<TokenInfo>& tokens, Token& token, FileInfo& info)
     {
-        info.end().incrementColumn();
+        info.advanceBy(token);
         tokens.emplace_back(token, info);
-        
         token.clear();
+        
         return state;
     }
     
-    TokenizerState produceToken(const TokenizerState state, std::deque<TokenInfo>& tokens, Token& token, FileInfo& info, Token&& nextToken, FileInfo&& nextInfo)
+    TokenizerState produceToken(const TokenizerState state, std::deque<TokenInfo>& tokens, Token& token, FileInfo& info, Token&& nextToken)
     {
+        info.advanceBy(token);
         tokens.emplace_back(token, info);
         token.clear();
         
-        tokens.emplace_back(nextToken, nextInfo);
+        info.advanceBy(nextToken);
+        tokens.emplace_back(nextToken, info);
         
         return state;
     }
