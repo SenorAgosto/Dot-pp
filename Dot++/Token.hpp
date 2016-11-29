@@ -11,7 +11,7 @@ namespace dot_pp {
     public:
         Token();
         Token(const std::string& value, const TokenType type);
-        
+                
         void type(const TokenType type) { type_ = type; }
         TokenType type() const { return type_; }
 
