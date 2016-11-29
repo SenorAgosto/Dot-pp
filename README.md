@@ -1,6 +1,10 @@
 # Dot++
 
-A small library for reading DOT graph files and serializing graphs into DOT files. 
+A small library for reading DOT graph files and serializing graphs into DOT files. We support a subset of DOT: 
+
+- we don't support subgraphs
+- we don't support position attributes 
+- we require an semicolon at the end of each line
 
 ### Use 
 
