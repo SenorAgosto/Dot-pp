@@ -13,6 +13,7 @@ namespace dot_pp { namespace states {
         switch(c)
         {
         case '"':   return produceToken(TokenizerState::StringLiteral, tokens, token, info);
+        case ';':   return produceToken(TokenizerState::Init, tokens, token, info, Token(";", TokenType::end_statement));
         case '[':   return produceToken(TokenizerState::Init, tokens, token, info, Token("[", TokenType::l_bracket));
         case ']':   return produceToken(TokenizerState::Init, tokens, token, info, Token("]", TokenType::r_bracket));
         case '=':   return produceToken(TokenizerState::Init, tokens, token, info, Token("=", TokenType::equal));

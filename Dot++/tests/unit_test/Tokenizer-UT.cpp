@@ -47,7 +47,7 @@ namespace {
             tokenizer.consume(c, tokens);
         }
         
-        REQUIRE CHECK_EQUAL(10U, tokens.size());
+        REQUIRE CHECK_EQUAL(12U, tokens.size());
         
         CHECK_EQUAL("digraph", tokens[0].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[0].token().type());
@@ -64,19 +64,25 @@ namespace {
         CHECK_EQUAL("->", tokens[4].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[4].token().type());
 
-        CHECK_EQUAL("b;", tokens[5].token().to_string());                       // TODO: should just be 'b'
+        CHECK_EQUAL("b", tokens[5].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[5].token().type());
         
-        CHECK_EQUAL("a", tokens[6].token().to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[6].token().type());
+        CHECK_EQUAL(";", tokens[6].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::end_statement, tokens[6].token().type());
         
-        CHECK_EQUAL("->", tokens[7].token().to_string());
+        CHECK_EQUAL("a", tokens[7].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[7].token().type());
-
-        CHECK_EQUAL("c;", tokens[8].token().to_string());                     // TODO: should just be 'c'
+        
+        CHECK_EQUAL("->", tokens[8].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[8].token().type());
 
-        CHECK_EQUAL("}", tokens[9].token().to_string());
-        CHECK_EQUAL(dot_pp::TokenType::r_paren, tokens[9].token().type());
+        CHECK_EQUAL("c", tokens[9].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::string, tokens[9].token().type());
+
+        CHECK_EQUAL(";", tokens[10].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::end_statement, tokens[10].token().type());
+
+        CHECK_EQUAL("}", tokens[11].token().to_string());
+        CHECK_EQUAL(dot_pp::TokenType::r_paren, tokens[11].token().type());
     }
 }
