@@ -62,7 +62,7 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[3].token().type());
         
         CHECK_EQUAL("->", tokens[4].token().to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[4].token().type());
+        CHECK_EQUAL(dot_pp::TokenType::arrow, tokens[4].token().type());
 
         CHECK_EQUAL("b", tokens[5].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[5].token().type());
@@ -74,7 +74,7 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[7].token().type());
         
         CHECK_EQUAL("->", tokens[8].token().to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, tokens[8].token().type());
+        CHECK_EQUAL(dot_pp::TokenType::arrow, tokens[8].token().type());
 
         CHECK_EQUAL("c", tokens[9].token().to_string());
         CHECK_EQUAL(dot_pp::TokenType::string, tokens[9].token().type());
