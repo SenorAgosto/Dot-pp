@@ -6,21 +6,19 @@ namespace dot_pp {
     {
         switch(type)
         {
-        case TokenType::string:                 os << "TokenType::string";
-        case TokenType::string_literal:         os << "TokenType::string_literal";
-        case TokenType::keyword:                os << "TokenType::keyword";
-        case TokenType::l_paren:                os << "TokenType::l_paren";
-        case TokenType::r_paren:                os << "TokenType::r_paren";
-        case TokenType::bidirectional_arrow:    os << "TokenType::bidirectional_arrow";
-        case TokenType::arrow:                  os << "TokenType::arrow";
-        case TokenType::l_bracket:              os << "TokenType::l_bracket";
-        case TokenType::r_bracket:              os << "TokenType::r_bracket";
-        case TokenType::equal:                  os << "TokenType::equal";
-        case TokenType::comment:                os << "TokenType::comment";
-        case TokenType::multiline_comment:      os << "TokenType::multiline_comment";
-        default:                                os << "Unknown TokenType Value";
+        case TokenType::string:                 return os << "TokenType::string";
+        case TokenType::string_literal:         return os << "TokenType::string_literal";
+        case TokenType::keyword:                return os << "TokenType::keyword";
+        case TokenType::l_paren:                return os << "TokenType::l_paren";
+        case TokenType::r_paren:                return os << "TokenType::r_paren";
+        case TokenType::bidirectional_arrow:    return os << "TokenType::bidirectional_arrow";
+        case TokenType::arrow:                  return os << "TokenType::arrow";
+        case TokenType::l_bracket:              return os << "TokenType::l_bracket";
+        case TokenType::r_bracket:              return os << "TokenType::r_bracket";
+        case TokenType::equal:                  return os << "TokenType::equal";
+        case TokenType::comment:                return os << "TokenType::comment";
+        case TokenType::multiline_comment:      return os << "TokenType::multiline_comment";
+        default:                                return os << "Unknown TokenType Value";
         };
-        
-        return os;
     }
 }
