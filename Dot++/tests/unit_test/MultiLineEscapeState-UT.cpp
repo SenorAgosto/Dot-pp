@@ -35,7 +35,7 @@ namespace {
         CHECK_EQUAL(dot_pp::TokenizerState::SlashLineComment, state.consume('\n', info, token, tokens));
         
         REQUIRE CHECK_EQUAL(0U, tokens.size());
-        CHECK_EQUAL("abc", token.to_string());
+        CHECK_EQUAL("abc\n", token.to_string());
         CHECK_EQUAL(dot_pp::TokenType::multiline_comment, token.type());
         CHECK(info.empty());    // token not yet produced, empty.
     }

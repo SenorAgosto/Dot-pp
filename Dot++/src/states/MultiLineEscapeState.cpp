@@ -11,7 +11,9 @@ namespace dot_pp { namespace states {
     {
         if(c == '\n')
         {
+            token.append(c);
             token.type(TokenType::multiline_comment);
+            
             return TokenizerState::SlashLineComment;
         }
         
