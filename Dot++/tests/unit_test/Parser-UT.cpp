@@ -10,11 +10,11 @@
 
 namespace {
     
-    struct LogPolicy
+    struct LoggingInterface
     {
-        static void info(const std::exception&) {}
-        static void warn(const std::exception&) {}
-        static void error(const std::exception&) {}
+        static void info(const std::string&) {}
+        static void warn(const std::string&) {}
+        static void error(const std::string&) {}
     };
     
     struct GraphMock
@@ -57,7 +57,8 @@ namespace {
     struct ParserFixture
     {
         ParserFixture()
-            : filename("test.dot")
+            : parser(logHandle)
+            , filename("test.dot")
         {
         }
         
@@ -73,7 +74,8 @@ namespace {
         }
         
         GraphMock graph;
-        dot_pp::Parser<GraphMock, LogPolicy> parser;
+        LoggingInterface logHandle;
+        dot_pp::Parser<GraphMock, LoggingInterface> parser;
         
         const std::string filename;
     };
