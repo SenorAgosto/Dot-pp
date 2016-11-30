@@ -2,9 +2,10 @@
 
 A small library for reading DOT graph files and serializing graphs into DOT files. We support a subset of DOT: 
 
+- we require an semicolon at the end of each line
 - we don't support subgraphs
 - we don't support position attributes 
-- we require an semicolon at the end of each line
+- we will support multiple graphs per input file, your `ConstructionPolicy` should be prepared to deal with that scenario.
 
 ### Use 
 
