@@ -11,7 +11,11 @@ namespace dot_pp { namespace states {
     {
         if(c == '\n')
         {
-            token.type(TokenType::comment);
+            if(token.type() != TokenType::multiline_comment)
+            {
+                token.type(TokenType::comment);
+            }
+            
             return produceToken(TokenizerState::Init, tokens, token, info);
         }
         
@@ -20,6 +24,17 @@ namespace dot_pp { namespace states {
         {
             token.type(TokenType::multiline_comment);
             return TokenizerState::MultiLineEscape;
+        }
+        
+        // ignore second slash
+        if(c == '/')
+        {
+            return TokenizerState::SlashLineComment;
+        }
+
+        if(c == '*')
+        {
+            return TokenizerState::MultiLineComment;
         }
         
         token.append(c);
