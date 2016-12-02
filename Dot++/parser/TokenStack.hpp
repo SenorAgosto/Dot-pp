@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Dot++/TokenInfo.hpp>
+#include <Dot++/lexer/TokenInfo.hpp>
 #include <deque>
 #include <stack>
 
