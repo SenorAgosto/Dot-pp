@@ -1,11 +1,11 @@
-#include <Dot++/states/StringLiteralState.hpp>
+#include <Dot++/lexer/states/StringLiteralState.hpp>
 
-#include <Dot++/Token.hpp>
-#include <Dot++/TokenizerState.hpp>
+#include <Dot++/lexer/Token.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp { namespace states {
+namespace dot_pp { namespace lexer { namespace states {
     
     TokenizerState StringLiteralState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>& tokens) const
     {
@@ -23,4 +23,4 @@ namespace dot_pp { namespace states {
         token.append(c);
         return TokenizerState::StringLiteral;
     }
-}}
+}}}

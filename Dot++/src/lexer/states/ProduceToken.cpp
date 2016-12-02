@@ -1,6 +1,6 @@
 #include "./ProduceToken.hpp"
 
-namespace dot_pp { namespace states {
+namespace dot_pp { namespace lexer { namespace states {
     
     namespace {
         inline
@@ -79,4 +79,4 @@ namespace dot_pp { namespace states {
         info.start() = info.end();
         return state;
     }
-}}
+}}}

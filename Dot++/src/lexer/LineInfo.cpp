@@ -1,6 +1,6 @@
-#include <Dot++/LineInfo.hpp>
+#include <Dot++/lexer/LineInfo.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     LineInfo::LineInfo()
         : line_(1)
@@ -38,4 +38,4 @@ namespace dot_pp {
             lhs.column() > rhs.column() :
             lhs.line() > rhs.line();
     }
-}
+}}

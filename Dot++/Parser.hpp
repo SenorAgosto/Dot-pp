@@ -1,6 +1,6 @@
 #pragma once 
-#include <Dot++/Tokenizer.hpp>
-#include <Dot++/TokenInfo.hpp>
+#include <Dot++/lexer/Tokenizer.hpp>
+#include <Dot++/lexer/TokenInfo.hpp>
 
 #include <deque>
 #include <istream>
@@ -15,7 +15,7 @@ namespace dot_pp {
         void parse(std::istream& stream, const std::string& filename, ConstructionPolicy& policy);
     
     private:
-        std::deque<TokenInfo> tokenize(std::istream& stream, const std::string& filename);
+        std::deque<lexer::TokenInfo> tokenize(std::istream& stream, const std::string& filename);
         
     private:
         LoggingInterface& log_;
@@ -43,10 +43,10 @@ namespace dot_pp {
     }
     
     template<class ConstructionPolicy, class LoggingInterface>
-    std::deque<TokenInfo> Parser<ConstructionPolicy, LoggingInterface>::tokenize(std::istream& stream, const std::string& filename)
+    std::deque<lexer::TokenInfo> Parser<ConstructionPolicy, LoggingInterface>::tokenize(std::istream& stream, const std::string& filename)
     {
-        Tokenizer tokenizer(filename);
-        std::deque<TokenInfo> tokens;
+        lexer::Tokenizer tokenizer(filename);
+        std::deque<lexer::TokenInfo> tokens;
 
         while(!stream.eof())
         {

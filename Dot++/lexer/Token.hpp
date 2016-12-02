@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/TokenType.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/TokenType.hpp>
 #include <string> 
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     class Token
     {
@@ -26,4 +26,4 @@ namespace dot_pp {
         std::string value_;
         TokenType type_;
     };
-}
+}}

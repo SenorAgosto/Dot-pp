@@ -1,6 +1,6 @@
-#include <Dot++/TokenType.hpp>
+#include <Dot++/lexer/TokenType.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     std::ostream& operator<<(std::ostream& os, const TokenType type)
     {
@@ -21,4 +21,4 @@ namespace dot_pp {
         default:                                return os << "Unknown TokenType Value";
         };
     }
-}
+}}

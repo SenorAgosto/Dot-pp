@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <ostream>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     enum class TokenType : uint8_t {
         string,
@@ -25,4 +25,4 @@ namespace dot_pp {
     };
     
     std::ostream& operator<<(std::ostream& os, const TokenType type);
-}
+}}

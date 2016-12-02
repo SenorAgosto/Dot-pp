@@ -1,9 +1,9 @@
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/Token.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/Token.hpp>
 
 #include <utility>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     FileInfo::FileInfo(const std::string& filename)
         : filename_(filename)
@@ -38,4 +38,4 @@ namespace dot_pp {
             }
         }
     }
-}
+}}

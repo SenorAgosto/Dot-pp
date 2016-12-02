@@ -1,9 +1,9 @@
 #pragma once
 #include <stdexcept>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     enum class TokenizerState;
-}
+}}
 
 namespace dot_pp {
     
@@ -16,6 +16,6 @@ namespace dot_pp {
     class UnknownTokenizerState : public TokenizerError
     {
     public:
-        UnknownTokenizerState(const TokenizerState state);
+        UnknownTokenizerState(const lexer::TokenizerState state);
     };
 }

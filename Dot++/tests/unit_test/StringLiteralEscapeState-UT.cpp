@@ -1,14 +1,16 @@
 #include "./platform/UnitTestSupport.hpp"
 
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/states/StringLiteralEscapeState.hpp>
-#include <Dot++/Token.hpp>
-#include <Dot++/TokenInfo.hpp>
-#include <Dot++/TokenizerState.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/states/StringLiteralEscapeState.hpp>
+#include <Dot++/lexer/Token.hpp>
+#include <Dot++/lexer/TokenInfo.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
 
 #include <deque>
 
 namespace {
+    
+    using namespace dot_pp::lexer;
     
     struct StringLiteralEscapeStateFixture
     {
@@ -17,10 +19,10 @@ namespace {
         {
         }
         
-        dot_pp::FileInfo info;
-        dot_pp::Token token;
-        std::deque<dot_pp::TokenInfo> tokens;
-        dot_pp::states::StringLiteralEscapeState state;
+        FileInfo info;
+        Token token;
+        std::deque<TokenInfo> tokens;
+        states::StringLiteralEscapeState state;
     };
     
     TEST_FIXTURE(StringLiteralEscapeStateFixture, verifyInstatiation)
@@ -31,8 +33,8 @@ namespace {
     {
         CHECK_EQUAL(0U, tokens.size());
         
-        CHECK_EQUAL(dot_pp::TokenizerState::StringLiteral, state.consume(' ', info, token, tokens));
-        CHECK_EQUAL(dot_pp::TokenizerState::StringLiteral, state.consume('"', info, token, tokens));
+        CHECK_EQUAL(TokenizerState::StringLiteral, state.consume(' ', info, token, tokens));
+        CHECK_EQUAL(TokenizerState::StringLiteral, state.consume('"', info, token, tokens));
         
         CHECK_EQUAL(0U, tokens.size());
         CHECK_EQUAL(" \"", token.to_string());
