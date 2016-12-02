@@ -1,9 +1,9 @@
-#include <Dot++/TokenizerStatesPack.hpp>
+#include <Dot++/lexer/TokenizerStatesPack.hpp>
 
 #include <Dot++/Exceptions.hpp>
-#include <Dot++/TokenizerState.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     const TokenizerStateInterface& TokenizerStatesPack::operator[](const TokenizerState state) const
     {
@@ -30,4 +30,4 @@ namespace dot_pp {
         
         throw UnknownTokenizerState(state);
     }
-}
+}}

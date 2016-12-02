@@ -1,6 +1,6 @@
-#include <Dot++/Token.hpp>
+#include <Dot++/lexer/Token.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     
     Token::Token()
         : type_(TokenType::string)
@@ -36,4 +36,4 @@ namespace dot_pp {
         value_.clear();
         type_ = TokenType::string;
     }
-}
+}}

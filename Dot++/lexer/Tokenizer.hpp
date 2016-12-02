@@ -1,16 +1,16 @@
 #pragma once
 
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/Token.hpp>
-#include <Dot++/TokenInfo.hpp>
-#include <Dot++/TokenizerState.hpp>
-#include <Dot++/TokenizerStatesPack.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/Token.hpp>
+#include <Dot++/lexer/TokenInfo.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
+#include <Dot++/lexer/TokenizerStatesPack.hpp>
 
 #include <deque>
 #include <memory>
 #include <string>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     class Tokenizer
     {
@@ -26,4 +26,4 @@ namespace dot_pp {
         Token token_;
         TokenizerState state_;
     };
-}
+}}

@@ -1,7 +1,7 @@
 #pragma once 
 #include <ostream> 
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     enum class TokenizerState
     {
@@ -22,4 +22,4 @@ namespace dot_pp {
     };
     
     std::ostream& operator<<(std::ostream& os, const TokenizerState& state);
-}
+}}

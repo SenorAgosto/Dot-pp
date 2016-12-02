@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/Token.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/Token.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     
     class TokenInfo
     {
@@ -21,4 +21,4 @@ namespace dot_pp {
         FileInfo fileInfo_;
         Token token_;
     };
-}
+}}

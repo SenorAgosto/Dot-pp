@@ -1,7 +1,7 @@
-#include <Dot++/Tokenizer.hpp>
-#include <Dot++/TokenizerStateInterface.hpp>
+#include <Dot++/lexer/Tokenizer.hpp>
+#include <Dot++/lexer/TokenizerStateInterface.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     
     Tokenizer::Tokenizer(const std::string& filename)
         : filename_(filename)
@@ -14,4 +14,4 @@ namespace dot_pp {
     {
         state_ = states_[state_].consume(c, fileInfo_, token_, tokens);
     }
-}
+}}

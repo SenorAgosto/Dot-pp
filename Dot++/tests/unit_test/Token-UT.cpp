@@ -1,38 +1,40 @@
 #include "./platform/UnitTestSupport.hpp"
-#include <Dot++/Token.hpp>
+#include <Dot++/lexer/Token.hpp>
 
 namespace {
 
+    using namespace dot_pp::lexer;
+    
     TEST(verifyInstantation)
     {
-        dot_pp::Token token;
+        Token token;
 
         CHECK_EQUAL("", token.to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, token.type());
+        CHECK_EQUAL(TokenType::string, token.type());
     }
     
     TEST(verifyInstantationWithValueAndType)
     {
-        dot_pp::Token token("value", dot_pp::TokenType::comment);
+        Token token("value", TokenType::comment);
         
         CHECK_EQUAL("value", token.to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL(TokenType::comment, token.type());
     }
     
     TEST(verifySettingType)
     {
-        dot_pp::Token token("value", dot_pp::TokenType::comment);
+        Token token("value", TokenType::comment);
         
         CHECK_EQUAL("value", token.to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL(TokenType::comment, token.type());
 
-        token.type(dot_pp::TokenType::multiline_comment);
-        CHECK_EQUAL(dot_pp::TokenType::multiline_comment, token.type());
+        token.type(TokenType::multiline_comment);
+        CHECK_EQUAL(TokenType::multiline_comment, token.type());
     }
     
     TEST(verifyAppend)
     {
-        dot_pp::Token token;
+        Token token;
         CHECK_EQUAL("", token.to_string());
         
         token.append('a');
@@ -41,7 +43,7 @@ namespace {
     
     TEST(verifyEmpty)
     {
-        dot_pp::Token token;
+        Token token;
         CHECK(token.empty());
         
         token.append('\t');
@@ -62,15 +64,15 @@ namespace {
     
     TEST(verifyClear)
     {
-        dot_pp::Token token("value", dot_pp::TokenType::comment);
+        Token token("value", TokenType::comment);
 
         CHECK_EQUAL("value", token.to_string());
-        CHECK_EQUAL(dot_pp::TokenType::comment, token.type());
+        CHECK_EQUAL(TokenType::comment, token.type());
 
         token.clear();
         
         CHECK_EQUAL("", token.to_string());
-        CHECK_EQUAL(dot_pp::TokenType::string, token.type());
+        CHECK_EQUAL(TokenType::string, token.type());
         CHECK(token.empty());
     }
 }

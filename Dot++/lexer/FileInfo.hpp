@@ -1,14 +1,14 @@
 #pragma once 
-#include <Dot++/LineInfo.hpp>
+#include <Dot++/lexer/LineInfo.hpp>
 
 #include <cstddef>
 #include <string>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     class Token;
-}
+}}
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     // Information about where a token starts and ends
     class FileInfo
@@ -39,4 +39,4 @@ namespace dot_pp {
         LineInfo start_;
         LineInfo end_;
     };
-}
+}}

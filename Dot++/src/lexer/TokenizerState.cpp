@@ -1,6 +1,6 @@
-#include <Dot++/TokenizerState.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     
     std::ostream& operator<<(std::ostream& os, const TokenizerState& state)
     {
@@ -21,4 +21,4 @@ namespace dot_pp {
         
         return os;
     }
-}
+}}

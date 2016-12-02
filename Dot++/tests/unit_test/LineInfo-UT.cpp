@@ -1,8 +1,10 @@
 #include "./platform/UnitTestSupport.hpp"
-#include <Dot++/LineInfo.hpp>
+#include <Dot++/lexer/LineInfo.hpp>
 
 namespace {
 
+    using namespace dot_pp::lexer;
+    
     struct LineInfoFixture
     {
         LineInfoFixture()
@@ -10,8 +12,8 @@ namespace {
         {
         }
         
-        dot_pp::LineInfo li;
-        dot_pp::LineInfo li2;
+        LineInfo li;
+        LineInfo li2;
     };
     
     TEST_FIXTURE(LineInfoFixture, verifyInstantation)
@@ -67,7 +69,7 @@ namespace {
     
     TEST_FIXTURE(LineInfoFixture, verifyEqual)
     {
-        dot_pp::LineInfo li3;
+        LineInfo li3;
         CHECK(li == li3);
     }
     

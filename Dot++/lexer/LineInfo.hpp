@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <ostream>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
 
     class LineInfo
     {
@@ -27,4 +27,4 @@ namespace dot_pp {
     bool operator<(const LineInfo& lhs, const LineInfo& rhs);
     bool operator==(const LineInfo& lhs, const LineInfo& rhs);
     bool operator>(const LineInfo& lhs, const LineInfo& rhs);
-}
+}}

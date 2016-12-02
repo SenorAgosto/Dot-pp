@@ -1,23 +1,23 @@
 #pragma once
 
-#include <Dot++/states/InitialState.hpp>
-#include <Dot++/states/BeginSlashLineCommentState.hpp>
-#include <Dot++/states/EndMultiLineCommentState.hpp>
-#include <Dot++/states/ErrorState.hpp>
-#include <Dot++/states/HashLineCommentState.hpp>
-#include <Dot++/states/InitialState.hpp>
-#include <Dot++/states/MultiLineCommentState.hpp>
-#include <Dot++/states/MultiLineEscapeState.hpp>
-#include <Dot++/states/SlashLineCommentState.hpp>
-#include <Dot++/states/StringLiteralEscapeState.hpp>
-#include <Dot++/states/StringLiteralState.hpp>
+#include <Dot++/lexer/states/InitialState.hpp>
+#include <Dot++/lexer/states/BeginSlashLineCommentState.hpp>
+#include <Dot++/lexer/states/EndMultiLineCommentState.hpp>
+#include <Dot++/lexer/states/ErrorState.hpp>
+#include <Dot++/lexer/states/HashLineCommentState.hpp>
+#include <Dot++/lexer/states/InitialState.hpp>
+#include <Dot++/lexer/states/MultiLineCommentState.hpp>
+#include <Dot++/lexer/states/MultiLineEscapeState.hpp>
+#include <Dot++/lexer/states/SlashLineCommentState.hpp>
+#include <Dot++/lexer/states/StringLiteralEscapeState.hpp>
+#include <Dot++/lexer/states/StringLiteralState.hpp>
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     enum class TokenizerState;
     class TokenizerStateInterface;
-}
+}}
 
-namespace dot_pp {
+namespace dot_pp { namespace lexer {
     
     class TokenizerStatesPack
     {
@@ -36,4 +36,4 @@ namespace dot_pp {
         states::StringLiteralEscapeState stringLiteralEscape_;
         states::ErrorState error_;
     };
-}
+}}

@@ -1,12 +1,14 @@
 #include "./platform/UnitTestSupport.hpp"
 
-#include <Dot++/FileInfo.hpp>
-#include <Dot++/LineInfo.hpp>
-#include <Dot++/Token.hpp>
-#include <Dot++/TokenType.hpp>
+#include <Dot++/lexer/FileInfo.hpp>
+#include <Dot++/lexer/LineInfo.hpp>
+#include <Dot++/lexer/Token.hpp>
+#include <Dot++/lexer/TokenType.hpp>
 
 namespace {
 
+    using namespace dot_pp::lexer;
+    
     struct FileInfoFixture
     {
         FileInfoFixture()
@@ -16,15 +18,15 @@ namespace {
         {
         }
         
-        dot_pp::LineInfo start;
-        dot_pp::LineInfo end;
-        dot_pp::FileInfo info;
+        LineInfo start;
+        LineInfo end;
+        FileInfo info;
     };
 
     TEST(verifyConstructionWithFilenameOnly)
     {
-        dot_pp::FileInfo info("test.dot");
-        dot_pp::LineInfo line;
+        FileInfo info("test.dot");
+        LineInfo line;
         
         CHECK_EQUAL("test.dot", info.filename());
         CHECK_EQUAL(line, info.start());
@@ -33,8 +35,8 @@ namespace {
     
     TEST(verifyConstructionWithFilenameAndStart)
     {
-        dot_pp::LineInfo line(100, 42);
-        dot_pp::FileInfo info("test.dot", line);
+        LineInfo line(100, 42);
+        FileInfo info("test.dot", line);
         
         CHECK_EQUAL("test.dot", info.filename());
         CHECK_EQUAL(line, info.start());
@@ -43,9 +45,9 @@ namespace {
     
     TEST(verifyConstructionWithAllParams)
     {
-        dot_pp::LineInfo start(100, 42);
-        dot_pp::LineInfo end(100, 50);
-        dot_pp::FileInfo info("test.dot", start, end);
+        LineInfo start(100, 42);
+        LineInfo end(100, 50);
+        FileInfo info("test.dot", start, end);
         
         CHECK_EQUAL("test.dot", info.filename());
         CHECK_EQUAL(start, info.start());
@@ -54,15 +56,15 @@ namespace {
     
     TEST(verifyCopyConstruction)
     {
-        dot_pp::LineInfo start(100, 42);
-        dot_pp::LineInfo end(100, 50);
-        dot_pp::FileInfo info("test.dot", start, end);
+        LineInfo start(100, 42);
+        LineInfo end(100, 50);
+        FileInfo info("test.dot", start, end);
         
         CHECK_EQUAL("test.dot", info.filename());
         CHECK_EQUAL(start, info.start());
         CHECK_EQUAL(end, info.end());
 
-        dot_pp::FileInfo info2(info);
+        FileInfo info2(info);
 
         CHECK_EQUAL("test.dot", info2.filename());
         CHECK_EQUAL(start, info2.start());
@@ -71,9 +73,9 @@ namespace {
     
     TEST(verifyMoveConstruction)
     {
-        dot_pp::LineInfo start(100, 42);
-        dot_pp::LineInfo end(100, 50);
-        dot_pp::FileInfo info(dot_pp::FileInfo("test.dot", start, end));
+        LineInfo start(100, 42);
+        LineInfo end(100, 50);
+        FileInfo info(FileInfo("test.dot", start, end));
         
         CHECK_EQUAL("test.dot", info.filename());
         CHECK_EQUAL(start, info.start());
@@ -109,7 +111,7 @@ namespace {
     
     TEST_FIXTURE(FileInfoFixture, verifyAdvanceBy)
     {
-        dot_pp::Token token("variable20", dot_pp::TokenType::string);
+        Token token("variable20", TokenType::string);
         
         CHECK_EQUAL(end, info.end());
         
@@ -120,7 +122,7 @@ namespace {
     
     TEST_FIXTURE(FileInfoFixture, verifyAdvanceByWithEmbededNewLines)
     {
-        dot_pp::Token token("variable20\nvariable21\nvariable22", dot_pp::TokenType::multiline_comment);
+        Token token("variable20\nvariable21\nvariable22", TokenType::multiline_comment);
         
         CHECK_EQUAL(end, info.end());
         
@@ -131,8 +133,8 @@ namespace {
     
     TEST_FIXTURE(FileInfoFixture, verifyEmpty)
     {
-        dot_pp::LineInfo empty;
-        dot_pp::FileInfo info2("test.dot", empty, empty);
+        LineInfo empty;
+        FileInfo info2("test.dot", empty, empty);
         
         CHECK(!info.empty());
         CHECK(info2.empty());

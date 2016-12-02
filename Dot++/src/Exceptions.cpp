@@ -5,7 +5,7 @@ namespace dot_pp {
     
     namespace {
         
-        std::string constructError(const std::string& s, const TokenizerState state)
+        std::string constructError(const std::string& s, const lexer::TokenizerState state)
         {
             std::stringstream ss;
             ss << s << static_cast<int>(state);
@@ -19,7 +19,7 @@ namespace dot_pp {
     {
     }
     
-    UnknownTokenizerState::UnknownTokenizerState(const TokenizerState state)
+    UnknownTokenizerState::UnknownTokenizerState(const lexer::TokenizerState state)
         : TokenizerError(constructError("Unknown Tokenizer State: ", state))
     {
     }

@@ -1,11 +1,11 @@
-#include <Dot++/states/MultiLineCommentState.hpp>
+#include <Dot++/lexer/states/MultiLineCommentState.hpp>
 
-#include <Dot++/Token.hpp>
-#include <Dot++/TokenizerState.hpp>
+#include <Dot++/lexer/Token.hpp>
+#include <Dot++/lexer/TokenizerState.hpp>
 
 #include "./ProduceToken.hpp"
 
-namespace dot_pp { namespace states {
+namespace dot_pp { namespace lexer { namespace states {
     
     TokenizerState MultiLineCommentState::consume(const char c, FileInfo&, Token& token, std::deque<TokenInfo>&) const
     {
@@ -17,4 +17,4 @@ namespace dot_pp { namespace states {
         token.append(c);
         return TokenizerState::MultiLineComment;
     }
-}}
+}}}
