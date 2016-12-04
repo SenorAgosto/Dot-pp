@@ -6,6 +6,10 @@ namespace dot_pp { namespace lexer {
     enum class TokenizerState;
 }}
 
+namespace dot_pp { namespace parser {
+    enum class ParserState;
+}}
+
 namespace dot_pp {
     
     class ParserError : public std::runtime_error
@@ -30,5 +34,11 @@ namespace dot_pp {
     {
     public:
         SyntaxError(const std::string& error, const lexer::TokenInfo& token);
+    };
+    
+    class UnknownParserState : public ParserError
+    {
+    public:
+        UnknownParserState(const parser::ParserState state);
     };
 }

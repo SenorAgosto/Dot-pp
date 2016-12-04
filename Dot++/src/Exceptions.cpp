@@ -15,10 +15,20 @@ namespace dot_pp {
             return ss.str();
         }
         
-        std::string constructFileLocationString(const lexer::TokenInfo& info)
+        std::string constructFileLocationString(const std::string& s, const lexer::TokenInfo& info, const std::string& error)
         {
             std::stringstream ss;
-            ss << info.fileInfo().end().line() << ":" << info.fileInfo().end().column();
+            ss  << s
+                << info.fileInfo().end().line() << ":" << info.fileInfo().end().column()
+                << ": " << error;
+            
+            return ss.str();
+        }
+        
+        std::string constructParserStateError(const std::string& s, const parser::ParserState state)
+        {
+            std::stringstream ss;
+            ss << s << static_cast<int>(state);
             
             return ss.str();
         }
@@ -40,7 +50,12 @@ namespace dot_pp {
     }
     
     SyntaxError::SyntaxError(const std::string& error, const lexer::TokenInfo& info)
-        : ParserError("Syntax Error: " + constructFileLocationString(info) + ": " + error)
+        : ParserError(constructFileLocationString("Syntax Error: ", info, error))
+    {
+    }
+    
+    UnknownParserState::UnknownParserState(const parser::ParserState state)
+        : ParserError(constructParserStateError("Unknown parser state encountered: ", state))
     {
     }
 }
