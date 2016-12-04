@@ -76,7 +76,7 @@ namespace {
         CHECK_EQUAL(0U, stack.size());
         CHECK(constructor.finalized);
     }
-        
+    
     TEST_FIXTURE(BeginGraphStateFixture, verifyCommentsAreIgnored)
     {
         std::deque<TokenInfo> tokens;
