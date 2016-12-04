@@ -16,9 +16,9 @@ namespace {
     struct IgnoreSubgraphsStateFixture
     {
         TokenStack stack;
-        NullConstructionPolicy constructor;
+        dot_pp::NullConstructionPolicy constructor;
         
-        states::IgnoreSubgraphsState<NullConstructionPolicy> state;
+        states::IgnoreSubgraphsState<dot_pp::NullConstructionPolicy> state;
     };
     
     TEST_FIXTURE(IgnoreSubgraphsStateFixture, verifyInstatiation)

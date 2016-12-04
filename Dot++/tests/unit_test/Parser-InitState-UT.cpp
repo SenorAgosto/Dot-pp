@@ -14,9 +14,9 @@ namespace {
     struct InitialStateFixture
     {
         TokenStack stack;
-        NullConstructionPolicy constructor;
+        dot_pp::NullConstructionPolicy constructor;
         
-        states::InitialState<NullConstructionPolicy> state;
+        states::InitialState<dot_pp::NullConstructionPolicy> state;
     };
     
     TEST_FIXTURE(InitialStateFixture, verifyInstatiation)
