@@ -14,6 +14,11 @@ namespace dot_pp { namespace parser { namespace states {
         ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, ConstructionPolicy& constructor) override
         {
             const auto& token = handle->token();
+
+            if((token.type() == lexer::TokenType::comment) || (token.type() == lexer::TokenType::multiline_comment))
+            {
+                return ParserState::GraphKeyword;
+            }
             
             if(token.type() == lexer::TokenType::string)
             {
@@ -44,7 +49,7 @@ namespace dot_pp { namespace parser { namespace states {
                 return ParserState::BeginGraph;
             }
             
-            throw dot_pp::SyntaxError("Unexpected token after keyword 'graph' or 'digraph', expected graph name (string) or '{'.", *handle);
+            throw dot_pp::SyntaxError("Unexpected token after keyword 'graph' or 'digraph', expected graph name (string) or '{', found '" + token.to_string() + "'", *handle);
         }
     };
 }}}

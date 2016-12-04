@@ -119,4 +119,18 @@ namespace {
             CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
         }
     }
+    
+    TEST_FIXTURE(GraphKeywordStateFixture, verifyCommentsAreIgnored)
+    {
+        std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
+
+        auto handle = tokens.cbegin();
+        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(0U, stack.size());
+        
+        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(0U, stack.size());
+    }
 }

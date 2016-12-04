@@ -1,7 +1,7 @@
 #include "./platform/UnitTestSupport.hpp"
 
 #include <Dot++/Exceptions.hpp>
-#include "Dot++/NullConstructionPolicy.hpp"
+#include <Dot++/NullConstructionPolicy.hpp>
 
 #include <Dot++/lexer/TokenInfo.hpp>
 #include <Dot++/parser/states/InitialState.hpp>
@@ -27,18 +27,10 @@ namespace {
     {
         std::deque<TokenInfo> tokens;
         tokens.emplace_back(Token("digraph", TokenType::keyword), FileInfo("test.dot"));
-        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
-        tokens.emplace_back(Token("blah blah", TokenType::multiline_comment), FileInfo("test.dot"));
 
         auto handle = tokens.cbegin();
         
         CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(1U, stack.size());
-        
-        CHECK_EQUAL(ParserState::Init, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(1U, stack.size());
-        
-        CHECK_EQUAL(ParserState::Init, state.consume(handle++, stack, constructor));
         CHECK_EQUAL(1U, stack.size());
     }
     
@@ -69,5 +61,20 @@ namespace {
         
         auto handle = tokens.begin();
         CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+    }
+    
+    TEST_FIXTURE(InitialStateFixture, verifyIgnoresComments)
+    {
+        std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah blah", TokenType::multiline_comment), FileInfo("test.dot"));
+        
+        auto handle = tokens.cbegin();
+        
+        CHECK_EQUAL(ParserState::Init, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(0U, stack.size());
+        
+        CHECK_EQUAL(ParserState::Init, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(0U, stack.size());
     }
 }
