@@ -5,10 +5,11 @@
 
 namespace dot_pp { namespace parser {
 
+    template<class ConstructionPolicy>
     class ParserStateInterface
     {
     public:
         virtual ~ParserStateInterface(){}
-        virtual ParserState consume(const TokenInfoHandle& token, TokenStack& stack) = 0;
+        virtual ParserState consume(const TokenInfoHandle& token, TokenStack& stack, ConstructionPolicy& constructor) = 0;
     };
 }}

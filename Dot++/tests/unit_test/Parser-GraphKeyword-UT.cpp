@@ -4,15 +4,42 @@
 #include <Dot++/lexer/TokenInfo.hpp>
 #include <Dot++/parser/states/GraphKeywordState.hpp>
 
+#include <iterator>
+
 namespace {
     
     using namespace dot_pp::lexer;
     using namespace dot_pp::parser;
+
+    struct NullConstructionPolicy
+    {
+        NullConstructionPolicy()
+            : madeGraph(false)
+            , madeDigraph(false)
+        {
+        }
+        
+        void createGraph(const std::string&) { madeGraph = true; }
+        void createDigraph(const std::string&) { madeDigraph = true; }
+        
+        void createVertex(const std::string&) {}
+        void createEdge(const std::string&, const std::string&){}
+        
+        void applyGraphAttribute(const std::string&, const std::string&){}
+        void applyVertexAttribute(const std::string&, const std::string&, const std::string&) {}
+        
+        void applyEdgeAttribute(const std::string&, const std::string&, const std::string&, const std::string&) {}
+        
+        bool madeGraph;
+        bool madeDigraph;
+    };
     
     struct GraphKeywordStateFixture
     {
         TokenStack stack;
-        states::GraphKeywordState state;
+        NullConstructionPolicy constructor;
+        
+        states::GraphKeywordState<NullConstructionPolicy> state;
     };
     
     TEST_FIXTURE(GraphKeywordStateFixture, verifyInstatiation)
@@ -25,16 +52,54 @@ namespace {
         tokens.emplace_back(Token("stages", TokenType::string), FileInfo("test.dot"));
         
         auto handle = tokens.cbegin();
-        CHECK_EQUAL(ParserState::GraphName, state.consume(handle, stack));
+        CHECK_EQUAL(ParserState::GraphName, state.consume(handle, stack, constructor));
     }
     
-    TEST_FIXTURE(GraphKeywordStateFixture, verifyTransitionsToBeginGraphOnLeftParen)
+    TEST_FIXTURE(GraphKeywordStateFixture, verifyCreatesGraphAndTransitionsToBeginGraphOnLeftParen)
     {
         std::deque<TokenInfo> tokens;
         tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
+        tokens.emplace_back(Token("graph", TokenType::keyword), FileInfo("test.dot"));
+     
+        auto handle = tokens.cbegin();
+        
+        std::advance(handle, 1);
+        stack.push(handle);
+
+        handle = tokens.cbegin();
+        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
+        CHECK(constructor.madeGraph);
+    }
+
+    TEST_FIXTURE(GraphKeywordStateFixture, verifyCreatesDigraphAndTransitionsToBeginGraphOnLeftParen)
+    {
+        std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
+        tokens.emplace_back(Token("digraph", TokenType::keyword), FileInfo("test.dot"));
         
         auto handle = tokens.cbegin();
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack));
+        
+        std::advance(handle, 1);
+        stack.push(handle);
+
+        handle = tokens.cbegin();
+        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
+        CHECK(constructor.madeDigraph);
+    }
+    
+    TEST_FIXTURE(GraphKeywordStateFixture, verifyThrowsOnInvalidGraphKeyword)
+    {
+        std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
+        tokens.emplace_back(Token("invalid", TokenType::keyword), FileInfo("test.dot"));
+        
+        auto handle = tokens.cbegin();
+        
+        std::advance(handle, 1);
+        stack.push(handle);
+
+        handle = tokens.cbegin();
+        CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
     }
     
     TEST_FIXTURE(GraphKeywordStateFixture, verifySyntaxErrorOnOtherTokenTypes)
@@ -51,7 +116,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
         }
     }
 }
