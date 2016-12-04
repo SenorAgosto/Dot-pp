@@ -15,11 +15,6 @@ namespace dot_pp { namespace parser { namespace states {
         {
             const auto& token = handle->token();
             
-            if((token.type() == lexer::TokenType::comment) || (token.type() == lexer::TokenType::multiline_comment))
-            {
-                return ParserState::GraphName;
-            }
-            
             if(token.type() == lexer::TokenType::l_paren)
             {
                 const auto graphName = stack.top();

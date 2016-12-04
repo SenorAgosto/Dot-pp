@@ -14,12 +14,7 @@ namespace dot_pp { namespace parser { namespace states {
         ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, ConstructionPolicy&) override
         {
             const auto& token = handle->token();
-            
-            if((token.type() == lexer::TokenType::comment) || (token.type() == lexer::TokenType::multiline_comment))
-            {
-                return ParserState::Init;
-            }
-            
+                        
             if(token.type() == lexer::TokenType::keyword)
             {
                 const auto& value = token.to_string();

@@ -51,9 +51,6 @@ namespace {
         stack.push(handle++);
         stack.push(handle++);
         
-        handle = tokens.cbegin();
-        std::advance(handle, 2);
-        
         CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
         CHECK_EQUAL("stages", constructor.graphName);
         CHECK_EQUAL(0U, stack.size());
@@ -69,26 +66,9 @@ namespace {
         auto handle = tokens.cbegin();
         stack.push(handle++);
         stack.push(handle++);
-        
-        handle = tokens.cbegin();
-        std::advance(handle, 2);
-        
+                
         CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
         CHECK_EQUAL("stages", constructor.digraphName);
-        CHECK_EQUAL(0U, stack.size());
-    }
-    
-    TEST_FIXTURE(GraphNameStateFixture, verifyCommentsAreIgnored)
-    {
-        std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
-        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
-
-        auto handle = tokens.cbegin();
-        CHECK_EQUAL(ParserState::GraphName, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
-        
-        CHECK_EQUAL(ParserState::GraphName, state.consume(handle++, stack, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
     
@@ -104,6 +84,8 @@ namespace {
         tokens.emplace_back(Token("r_bracket", TokenType::r_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("equal", TokenType::equal), FileInfo("test.dot"));
         tokens.emplace_back(Token("end_statement", TokenType::end_statement), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {

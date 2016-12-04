@@ -4,8 +4,6 @@
 #include <Dot++/lexer/TokenInfo.hpp>
 #include <Dot++/parser/states/GraphKeywordState.hpp>
 
-#include <iterator>
-
 namespace {
     
     using namespace dot_pp::lexer;
@@ -58,15 +56,12 @@ namespace {
     TEST_FIXTURE(GraphKeywordStateFixture, verifyCreatesGraphAndTransitionsToBeginGraphOnLeftParen)
     {
         std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
         tokens.emplace_back(Token("graph", TokenType::keyword), FileInfo("test.dot"));
+        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
      
         auto handle = tokens.cbegin();
-        
-        std::advance(handle, 1);
-        stack.push(handle);
+        stack.push(handle++);
 
-        handle = tokens.cbegin();
         CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
         CHECK(constructor.madeGraph);
     }
@@ -74,15 +69,12 @@ namespace {
     TEST_FIXTURE(GraphKeywordStateFixture, verifyCreatesDigraphAndTransitionsToBeginGraphOnLeftParen)
     {
         std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
         tokens.emplace_back(Token("digraph", TokenType::keyword), FileInfo("test.dot"));
-        
-        auto handle = tokens.cbegin();
-        
-        std::advance(handle, 1);
-        stack.push(handle);
+        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
 
-        handle = tokens.cbegin();
+        auto handle = tokens.cbegin();
+        stack.push(handle++);
+
         CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
         CHECK(constructor.madeDigraph);
     }
@@ -90,21 +82,19 @@ namespace {
     TEST_FIXTURE(GraphKeywordStateFixture, verifyThrowsOnInvalidGraphKeyword)
     {
         std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
         tokens.emplace_back(Token("invalid", TokenType::keyword), FileInfo("test.dot"));
+        tokens.emplace_back(Token("{", TokenType::l_paren), FileInfo("test.dot"));
         
         auto handle = tokens.cbegin();
-        
-        std::advance(handle, 1);
-        stack.push(handle);
+        stack.push(handle++);
 
-        handle = tokens.cbegin();
         CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
     }
     
     TEST_FIXTURE(GraphKeywordStateFixture, verifySyntaxErrorOnOtherTokenTypes)
     {
         std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("keyword", TokenType::keyword), FileInfo("test.dot"));
         tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
         tokens.emplace_back(Token("r_paren", TokenType::r_paren), FileInfo("test.dot"));
         tokens.emplace_back(Token("edge", TokenType::edge), FileInfo("test.dot"));
@@ -113,24 +103,12 @@ namespace {
         tokens.emplace_back(Token("r_bracket", TokenType::r_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("equal", TokenType::equal), FileInfo("test.dot"));
         tokens.emplace_back(Token("end_statement", TokenType::end_statement), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
             CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
         }
-    }
-    
-    TEST_FIXTURE(GraphKeywordStateFixture, verifyCommentsAreIgnored)
-    {
-        std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
-        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
-
-        auto handle = tokens.cbegin();
-        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
-        
-        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
     }
 }

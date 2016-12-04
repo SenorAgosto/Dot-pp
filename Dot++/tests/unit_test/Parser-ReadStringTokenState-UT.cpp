@@ -83,24 +83,10 @@ namespace {
         CHECK_EQUAL(0U, stack.size());
     }
     
-    TEST_FIXTURE(ReadStringTokenStateFixture, verifyCommentsAreIgnored)
-    {
-        std::deque<TokenInfo> tokens;
-        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
-        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
-
-        auto handle = tokens.cbegin();
-        
-        CHECK_EQUAL(ParserState::ReadStringToken, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
-        
-        CHECK_EQUAL(ParserState::ReadStringToken, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
-    }
-    
     TEST_FIXTURE(ReadStringTokenStateFixture, verifyThrowsOnInvalidTokens)
     {
         std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("keyword", TokenType::keyword), FileInfo("test.dot"));
         tokens.emplace_back(Token("string", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
         tokens.emplace_back(Token("l_paren", TokenType::l_paren), FileInfo("test.dot"));
@@ -108,6 +94,8 @@ namespace {
         tokens.emplace_back(Token("l_bracket", TokenType::l_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("r_bracket", TokenType::r_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("end_statement", TokenType::end_statement), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
+        tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
