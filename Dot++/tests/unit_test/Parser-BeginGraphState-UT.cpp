@@ -77,17 +77,24 @@ namespace {
         CHECK(constructor.finalized);
     }
     
-    TEST_FIXTURE(BeginGraphStateFixture, verifyCommentsAreIgnored)
+    TEST_FIXTURE(BeginGraphStateFixture, verifySyntaxErrorOnOtherTokenTypes)
     {
         std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("keyword", TokenType::keyword), FileInfo("test.dot"));
+        tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
+        tokens.emplace_back(Token("edge", TokenType::edge), FileInfo("test.dot"));
+        tokens.emplace_back(Token("edge", TokenType::directed_edge), FileInfo("test.dot"));
+        tokens.emplace_back(Token("l_bracket", TokenType::l_bracket), FileInfo("test.dot"));
+        tokens.emplace_back(Token("r_bracket", TokenType::r_bracket), FileInfo("test.dot"));
+        tokens.emplace_back(Token("equal", TokenType::equal), FileInfo("test.dot"));
+        tokens.emplace_back(Token("end_statement", TokenType::end_statement), FileInfo("test.dot"));
+        tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
         tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
         tokens.emplace_back(Token("blah \n blah", TokenType::multiline_comment), FileInfo("test.dot"));
-
-        auto handle = tokens.cbegin();
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
         
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(0U, stack.size());
+        for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
+        {
+            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+        }
     }
 }
