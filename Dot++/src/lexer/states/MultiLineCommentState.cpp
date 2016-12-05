@@ -7,10 +7,11 @@
 
 namespace dot_pp { namespace lexer { namespace states {
     
-    TokenizerState MultiLineCommentState::consume(const char c, FileInfo&, Token& token, std::deque<TokenInfo>&) const
+    TokenizerState MultiLineCommentState::consume(const char c, FileInfo& info, Token& token, std::deque<TokenInfo>&) const
     {
         if(c == '*')
         {
+            info.incrementColumn();
             return TokenizerState::EndMultiLineComment;
         }
         
