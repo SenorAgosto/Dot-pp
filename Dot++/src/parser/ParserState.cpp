@@ -13,7 +13,7 @@ namespace dot_pp { namespace parser {
         case ParserState::IgnoreSubgraphs:          return os << "ParserState::IgnoreSubgraphs";
         case ParserState::ReadStringToken:          return os << "ParserState::ReadStringToken";
         case ParserState::ReadEdgeToken:            return os << "ParserState::ReadEdgeToken";
-        case ParserState::CreateEdge:               return os << "ParserState::CreateEdge";
+        case ParserState::CreatedEdge:              return os << "ParserState::CreateEdge";
         case ParserState::ReadGraphAttributeEqual:  return os << "ParserState::ReadGraphAttributeEqual";
         case ParserState::ReadGraphAttributeValue:  return os << "ParserState::ReadGraphAttributeValue";
         case ParserState::ReadLeftBracket:          return os << "ParserState::ReadLeftBracket";

@@ -15,7 +15,7 @@ namespace dot_pp { namespace parser {
         
         ReadStringToken,            // push string token
         ReadEdgeToken,              // edge | directed_edge, pop string token, create vertex, push string token
-        CreateEdge,                 // create vertex, pop token, create edge, push edge vertex1, push edge vertex2
+        CreatedEdge,                // create vertex, pop token, create edge, push edge vertex1, push edge vertex2
         
         ReadGraphAttributeEqual,    // =
         ReadGraphAttributeValue,    // string | string_literal token, pop token, create graph attribute
