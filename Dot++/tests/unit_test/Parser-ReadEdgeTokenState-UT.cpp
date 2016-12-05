@@ -53,7 +53,7 @@ namespace {
         
         CHECK_EQUAL(1U, stack.size());
         CHECK_EQUAL(ParserState::CreatedEdge, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(1U, stack.size());
+        CHECK_EQUAL(2U, stack.size());  // both vertices should be on the stack after edge
         
         CHECK_EQUAL("b", constructor.vertex);
         CHECK_EQUAL("a", constructor.edge.first);
