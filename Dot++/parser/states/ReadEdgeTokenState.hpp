@@ -24,8 +24,7 @@ namespace dot_pp { namespace parser { namespace states {
                 constructor.createVertex(vertex2);
                 constructor.createEdge(vertex1Token.to_string(), vertex2);
                 
-                // pop top, push handle
-                stack.top() = handle;
+                stack.push(handle);
                 return ParserState::CreatedEdge;
             }
         
