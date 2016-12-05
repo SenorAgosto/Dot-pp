@@ -30,7 +30,7 @@ namespace dot_pp { namespace parser { namespace states {
                 return ParserState::ReadGraphAttributeEqual;
             }
             
-            throw dot_pp::SyntaxError("??", *handle);
+            throw dot_pp::SyntaxError("Unexpected token encountered, expected '--', '->', '=', or '[', found '" + token.to_string() + "'", *handle);
         }
     };
 }}}
