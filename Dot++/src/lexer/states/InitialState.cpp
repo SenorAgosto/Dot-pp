@@ -22,8 +22,8 @@ namespace dot_pp { namespace lexer { namespace states {
         case '#':   return produceToken(TokenizerState::HashLineComment, tokens, token, info);
         case '/':   return produceToken(TokenizerState::SlashLineComment, tokens, token, info);
         case ' ':   return produceToken(TokenizerState::Init, tokens, token, info);
-        case '\t':  return produceToken(TokenizerState::Init, tokens, token, info);
-        case '\n':  return produceToken(TokenizerState::Init, tokens, token, info);
+        case '\t':  return produceToken(TokenizerState::Init, tokens, token, info, Token("\t", TokenType::string));
+        case '\n':  return produceToken(TokenizerState::Init, tokens, token, info, Token("\n", TokenType::string));
         case '\r':  return produceToken(TokenizerState::Init, tokens, token, info);
 
         default: break;

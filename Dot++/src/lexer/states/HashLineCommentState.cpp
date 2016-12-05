@@ -12,7 +12,11 @@ namespace dot_pp { namespace lexer { namespace states {
         if(c == '\n')
         {
             token.type(TokenType::comment);
-            return produceToken(TokenizerState::Init, tokens, token, info);
+            
+            const auto state = produceToken(TokenizerState::Init, tokens, token, info);
+            info.incrementLine();
+            
+            return state;
         }
 
         // ignore carriage returns

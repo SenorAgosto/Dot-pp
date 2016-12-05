@@ -12,7 +12,11 @@ namespace dot_pp { namespace lexer { namespace states {
         if(c == '/')
         {
             token.type(TokenType::multiline_comment);
-            return produceToken(TokenizerState::Init, tokens, token, info);
+            
+            const auto state = produceToken(TokenizerState::Init, tokens, token, info);
+            info.incrementColumn();
+            
+            return state;
         }
         
         token.append(c);

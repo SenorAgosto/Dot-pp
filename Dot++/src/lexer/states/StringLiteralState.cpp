@@ -11,12 +11,15 @@ namespace dot_pp { namespace lexer { namespace states {
     {
         if(c == '"')
         {
+            info.incrementColumn();
             token.type(TokenType::string_literal);
+            
             return produceToken(TokenizerState::Init, tokens, token, info);
         }
         
         if(c == '\\')
         {
+            info.incrementColumn();
             return TokenizerState::StringLiteralEscape;
         }
         

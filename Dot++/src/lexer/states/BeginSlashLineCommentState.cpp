@@ -13,12 +13,18 @@ namespace dot_pp { namespace lexer { namespace states {
     {
         if(c == '/')
         {
-            return produceToken(TokenizerState::SlashLineComment, tokens, token, info);
+            const auto state = produceToken(TokenizerState::SlashLineComment, tokens, token, info);
+            info.incrementColumn();
+            
+            return state;
         }
         
         if(c == '*')
         {
-            return produceToken(TokenizerState::MultiLineComment, tokens, token, info);
+            const auto state = produceToken(TokenizerState::MultiLineComment, tokens, token, info);
+            info.incrementColumn();
+            
+            return state;
         }
         
         return produceToken(TokenizerState::Init, tokens, token, info);

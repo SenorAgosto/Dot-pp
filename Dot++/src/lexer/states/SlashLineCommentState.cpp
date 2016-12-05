@@ -16,24 +16,26 @@ namespace dot_pp { namespace lexer { namespace states {
                 token.type(TokenType::comment);
             }
             
-            return produceToken(TokenizerState::Init, tokens, token, info);
+            return produceToken(TokenizerState::Init, tokens, token, info, Token("\n", TokenType::string));
         }
         
         // multiline escape sequance
         if(c == '\\')
         {
-            token.type(TokenType::multiline_comment);
+            token.type(TokenType::multiline_comment);   
             return TokenizerState::MultiLineEscape;
         }
         
         // ignore second slash
         if(c == '/')
         {
+            info.incrementColumn();
             return TokenizerState::SlashLineComment;
         }
 
         if(c == '*')
         {
+            info.incrementColumn();
             return TokenizerState::MultiLineComment;
         }
         
