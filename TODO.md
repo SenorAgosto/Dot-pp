@@ -1,6 +1,11 @@
 # TODO
 
 - add support for vertex attributes 
-- fix file:line reporting in the lexer. 
+- write unit test coverage for file:line error reporting.
+- change behavior of edge attributes to apply the attribute to all the edges in a chain, 
+  e.g. a -> b -> c [weight=2], should call: 
+    - applyEdgeAttribute("a", "b", "weight", "2")
+    - applyEdgeAttribute("b", "c", "weight", "2")
+
 - Change parse interface from std::istream& to char* and length, use std::string_view instead of std::string in tokens. 
 
