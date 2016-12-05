@@ -22,7 +22,7 @@ namespace dot_pp { namespace parser { namespace states {
             
             if(token.type() == lexer::TokenType::end_statement)
             {
-                stack.pop();
+                clear(stack);                
                 return ParserState::BeginGraph;
             }
             
