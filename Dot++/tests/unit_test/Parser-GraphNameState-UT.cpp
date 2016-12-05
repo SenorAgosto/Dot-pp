@@ -75,6 +75,7 @@ namespace {
     TEST_FIXTURE(GraphNameStateFixture, verifyThrowsOnInvalidToken)
     {
         std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("keyword", TokenType::keyword), FileInfo("test.dot"));
         tokens.emplace_back(Token("string", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
         tokens.emplace_back(Token("r_paren", TokenType::r_paren), FileInfo("test.dot"));
