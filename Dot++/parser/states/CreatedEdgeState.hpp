@@ -11,7 +11,7 @@ namespace dot_pp { namespace parser { namespace states {
     class CreatedEdgeState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy&) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack& attributes, ConstructionPolicy&) override
         {
             const auto& token = handle->token();
             
@@ -22,7 +22,9 @@ namespace dot_pp { namespace parser { namespace states {
             
             if(token.type() == lexer::TokenType::end_statement)
             {
-                clear(stack);                
+                clear(stack);
+                clear(attributes);
+                
                 return ParserState::BeginGraph;
             }
             
