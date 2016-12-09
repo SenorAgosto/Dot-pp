@@ -6,6 +6,7 @@
   e.g. a -> b -> c [weight=2], should call: 
     - applyEdgeAttribute("a", "b", "weight", "2")
     - applyEdgeAttribute("b", "c", "weight", "2")
+- change parser to allow multiple edge attributes
 
 - Change parse interface from std::istream& to char* and length, use std::string_view instead of std::string in tokens. 
 
