@@ -35,9 +35,10 @@ namespace {
     
     struct ReadGraphAttributeEqualStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        NullConstructionPolicy constructor;
         
+        NullConstructionPolicy constructor;
         states::ReadGraphAttributeEqualState<NullConstructionPolicy> state;
     };
     
@@ -55,7 +56,7 @@ namespace {
         stack.push(handle++);
         
         CHECK_EQUAL(1U, stack.size());
-        CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, attributes, constructor));
         
         CHECK_EQUAL(0U, stack.size());
         CHECK_EQUAL("attributeName", constructor.attribute.first);
@@ -72,7 +73,7 @@ namespace {
         stack.push(handle++);
         
         CHECK_EQUAL(1U, stack.size());
-        CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, attributes, constructor));
 
         CHECK_EQUAL(0U, stack.size());
         CHECK_EQUAL("attributeName", constructor.attribute.first);
@@ -95,7 +96,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
 }

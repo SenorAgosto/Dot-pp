@@ -16,6 +16,7 @@ namespace {
     
     struct ReadAttributeNameStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
         dot_pp::NullConstructionPolicy constructor;
         
@@ -34,7 +35,7 @@ namespace {
         auto handle = tokens.cbegin();
         
         CHECK_EQUAL(0U, stack.size());
-        CHECK_EQUAL(ParserState::ReadAttributeEqual, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadAttributeEqual, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
     
@@ -56,7 +57,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
 }

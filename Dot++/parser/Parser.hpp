@@ -15,6 +15,8 @@ namespace dot_pp { namespace parser {
         
     private:
         ConstructionPolicy& constructor_;
+        
+        TokenStack attributes_;
         TokenStack stack_;
         
         ParserStatesPack<ConstructionPolicy> states_;
@@ -31,6 +33,6 @@ namespace dot_pp { namespace parser {
     inline
     void Parser<ConstructionPolicy>::consume(const TokenInfoHandle& token)
     {
-        state_ = states_.consume(state_, token, stack_, constructor_);
+        state_ = states_.consume(state_, token, stack_, attributes_, constructor_);
     }
 }}

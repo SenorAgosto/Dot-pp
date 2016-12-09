@@ -11,7 +11,7 @@ namespace dot_pp { namespace parser { namespace states {
     class ReadGraphAttributeEqualState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, ConstructionPolicy& constructor) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy& constructor) override
         {
             const auto& token = handle->token();
         

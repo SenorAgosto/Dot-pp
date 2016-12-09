@@ -15,9 +15,10 @@ namespace {
     
     struct IgnoreSubgraphsStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        dot_pp::NullConstructionPolicy constructor;
         
+        dot_pp::NullConstructionPolicy constructor;
         states::IgnoreSubgraphsState<dot_pp::NullConstructionPolicy> state;
     };
     
@@ -42,16 +43,16 @@ namespace {
         
         auto handle = tokens.cbegin();
         
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, constructor));
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::IgnoreSubgraphs, state.consume(handle++, stack, attributes, constructor));
+        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle++, stack, attributes, constructor));
     }
 }

@@ -27,26 +27,26 @@ namespace dot_pp { namespace parser {
     class ParserStatesPack
     {
     public:
-        ParserState consume(const ParserState state, const TokenInfoHandle& token, TokenStack& stack, ConstructionPolicy& constructor)
+        ParserState consume(const ParserState state, const TokenInfoHandle& token, TokenStack& stack, TokenStack& attributes, ConstructionPolicy& constructor)
         {
             switch(state)
             {
-            case ParserState::Init:                         return init_.consume(token, stack, constructor);
-            case ParserState::GraphKeyword:                 return graphKeyword_.consume(token, stack, constructor);
-            case ParserState::GraphName:                    return graphName_.consume(token, stack, constructor);
-            case ParserState::BeginGraph:                   return begin_.consume(token, stack, constructor);
-            case ParserState::IgnoreSubgraphs:              return ignoreSubgraphs_.consume(token, stack, constructor);
-            case ParserState::ReadStringToken:              return readStringToken_.consume(token, stack, constructor);
-            case ParserState::ReadEdgeToken:                return readEdgeToken_.consume(token, stack, constructor);
-            case ParserState::CreatedEdge:                  return createEdge_.consume(token, stack, constructor);
-            case ParserState::ReadGraphAttributeEqual:      return readGraphAttributeEqual_.consume(token, stack, constructor);
-            case ParserState::ReadGraphAttributeValue:      return readGraphAttributeValue_.consume(token, stack, constructor);
-            case ParserState::ReadLeftBracketVertexAttribute: return leftBracketVertexAttribute_.consume(token, stack, constructor);
-            case ParserState::ReadVertexAttributeName:      return vertexAttributeName_.consume(token, stack, constructor);
-            case ParserState::ReadVertexAttributeEqual:     return vertexAttributeEqual_.consume(token, stack, constructor);
-            case ParserState::ReadLeftBracket:              return readLeftBracket_.consume(token, stack, constructor);
-            case ParserState::ReadAttributeName:            return readAttributeName_.consume(token, stack, constructor);
-            case ParserState::ReadAttributeEqual:           return readAttributeEqual_.consume(token, stack, constructor);
+            case ParserState::Init:                         return init_.consume(token, stack, attributes, constructor);
+            case ParserState::GraphKeyword:                 return graphKeyword_.consume(token, stack, attributes, constructor);
+            case ParserState::GraphName:                    return graphName_.consume(token, stack, attributes, constructor);
+            case ParserState::BeginGraph:                   return begin_.consume(token, stack, attributes, constructor);
+            case ParserState::IgnoreSubgraphs:              return ignoreSubgraphs_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadStringToken:              return readStringToken_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadEdgeToken:                return readEdgeToken_.consume(token, stack, attributes, constructor);
+            case ParserState::CreatedEdge:                  return createEdge_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadGraphAttributeEqual:      return readGraphAttributeEqual_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadGraphAttributeValue:      return readGraphAttributeValue_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadLeftBracketVertexAttribute: return leftBracketVertexAttribute_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadVertexAttributeName:      return vertexAttributeName_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadVertexAttributeEqual:     return vertexAttributeEqual_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadLeftBracket:              return readLeftBracket_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadAttributeName:            return readAttributeName_.consume(token, stack, attributes, constructor);
+            case ParserState::ReadAttributeEqual:           return readAttributeEqual_.consume(token, stack, attributes, constructor);
             default: break;
             };
             

@@ -13,9 +13,10 @@ namespace {
     
     struct InitialStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        dot_pp::NullConstructionPolicy constructor;
         
+        dot_pp::NullConstructionPolicy constructor;
         states::InitialState<dot_pp::NullConstructionPolicy> state;
     };
     
@@ -30,7 +31,7 @@ namespace {
 
         auto handle = tokens.cbegin();
         
-        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::GraphKeyword, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(1U, stack.size());
     }
     
@@ -52,7 +53,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
     
@@ -62,6 +63,6 @@ namespace {
         tokens.emplace_back(Token("keyword", TokenType::keyword), FileInfo("test.dot"));
         
         auto handle = tokens.begin();
-        CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+        CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
     }
 }
