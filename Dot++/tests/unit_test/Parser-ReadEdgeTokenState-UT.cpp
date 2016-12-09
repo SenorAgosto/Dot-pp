@@ -32,9 +32,10 @@ namespace {
     
     struct ReadEdgeTokenStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        NullConstructionPolicy constructor;
         
+        NullConstructionPolicy constructor;
         states::ReadEdgeTokenState<NullConstructionPolicy> state;
     };
     
@@ -52,7 +53,7 @@ namespace {
         stack.push(handle++);
         
         CHECK_EQUAL(1U, stack.size());
-        CHECK_EQUAL(ParserState::CreatedEdge, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::CreatedEdge, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(2U, stack.size());  // both vertices should be on the stack after edge
         
         CHECK_EQUAL("b", constructor.vertex);
@@ -78,7 +79,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
 }

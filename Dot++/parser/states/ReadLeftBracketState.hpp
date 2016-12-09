@@ -11,7 +11,7 @@ namespace dot_pp { namespace parser { namespace states {
     class ReadLeftBracketState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, ConstructionPolicy&) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy&) override
         {
             const auto& token = handle->token();
         

@@ -30,9 +30,10 @@ namespace {
     
     struct GraphNameStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        NullConstructionPolicy constructor;
         
+        NullConstructionPolicy constructor;
         states::GraphNameState<NullConstructionPolicy> state;
     };
     
@@ -51,7 +52,7 @@ namespace {
         stack.push(handle++);
         stack.push(handle++);
         
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
+        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, attributes, constructor));
         CHECK_EQUAL("stages", constructor.graphName);
         CHECK_EQUAL(0U, stack.size());
     }
@@ -67,7 +68,7 @@ namespace {
         stack.push(handle++);
         stack.push(handle++);
                 
-        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, constructor));
+        CHECK_EQUAL(ParserState::BeginGraph, state.consume(handle, stack, attributes, constructor));
         CHECK_EQUAL("stages", constructor.digraphName);
         CHECK_EQUAL(0U, stack.size());
     }
@@ -90,7 +91,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
 }

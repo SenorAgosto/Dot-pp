@@ -34,9 +34,10 @@ namespace {
     
     struct ReadStringTokenStateFixture
     {
+        TokenStack attributes;
         TokenStack stack;
-        NullConstructionPolicy constructor;
         
+        NullConstructionPolicy constructor;
         states::ReadStringTokenState<NullConstructionPolicy> state;
     };
     
@@ -54,7 +55,7 @@ namespace {
         stack.push(handle++);
         
         CHECK_EQUAL(1U, stack.size());
-        CHECK_EQUAL(ParserState::ReadEdgeToken, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadEdgeToken, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(1U, stack.size());
     }
 
@@ -68,7 +69,7 @@ namespace {
         stack.push(handle++);
         
         CHECK_EQUAL(1U, stack.size());
-        CHECK_EQUAL(ParserState::ReadEdgeToken, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadEdgeToken, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(1U, stack.size());
     }
 
@@ -79,7 +80,7 @@ namespace {
 
         auto handle = tokens.cbegin();
         
-        CHECK_EQUAL(ParserState::ReadGraphAttributeEqual, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadGraphAttributeEqual, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
 
@@ -90,7 +91,7 @@ namespace {
 
         auto handle = tokens.cbegin();
         
-        CHECK_EQUAL(ParserState::ReadLeftBracketVertexAttribute, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(ParserState::ReadLeftBracketVertexAttribute, state.consume(handle++, stack, attributes, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
     
@@ -109,7 +110,7 @@ namespace {
         
         for(auto handle = tokens.cbegin(), end = tokens.cend(); handle != end; ++handle)
         {
-            CHECK_THROW(state.consume(handle, stack, constructor), dot_pp::SyntaxError);
+            CHECK_THROW(state.consume(handle, stack, attributes, constructor), dot_pp::SyntaxError);
         }
     }
 }
