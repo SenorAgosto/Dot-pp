@@ -53,12 +53,16 @@ namespace {
         tokens.emplace_back(Token("attributeValue", TokenType::string), FileInfo("test.dot"));
         
         auto handle = tokens.cbegin();
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(1U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, attributes, constructor));
         
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL("attributeName", constructor.attribute.first);
         CHECK_EQUAL("attributeValue", constructor.attribute.second);
     }
@@ -70,12 +74,16 @@ namespace {
         tokens.emplace_back(Token("attributeValue", TokenType::string_literal), FileInfo("test.dot"));
         
         auto handle = tokens.cbegin();
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(1U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, attributes, constructor));
 
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL("attributeName", constructor.attribute.first);
         CHECK_EQUAL("attributeValue", constructor.attribute.second);
     }

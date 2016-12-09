@@ -32,7 +32,9 @@ namespace {
         auto handle = tokens.cbegin();
         
         CHECK_EQUAL(ParserState::ReadVertexAttributeName, state.consume(handle++, stack, attributes, constructor));
-        CHECK_EQUAL(1U, stack.size());
+        
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(0U, stack.size());
     }
     
     TEST_FIXTURE(InitialStateFixture, verifyTransitionsToGraphAttributeValue)

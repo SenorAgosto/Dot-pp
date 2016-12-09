@@ -66,10 +66,14 @@ namespace {
         
         stack.push(handle++);
         stack.push(handle++);
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(3U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(2U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadLeftBracket, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(2U, stack.size());
     }
 
@@ -85,10 +89,14 @@ namespace {
         
         stack.push(handle++);
         stack.push(handle++);
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(3U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(2U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadLeftBracket, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(2U, stack.size());
     }
     

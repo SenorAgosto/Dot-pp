@@ -33,10 +33,14 @@ namespace {
 
         auto handle = tokens.cbegin();
         stack.push(handle++);
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(1U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadLeftBracketVertexAttribute, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(1U, stack.size());
     }
 
@@ -49,10 +53,14 @@ namespace {
 
         auto handle = tokens.cbegin();
         stack.push(handle++);
-        stack.push(handle++);
+        attributes.push(handle++);
         
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(1U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadLeftBracketVertexAttribute, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(1U, stack.size());
     }
     
