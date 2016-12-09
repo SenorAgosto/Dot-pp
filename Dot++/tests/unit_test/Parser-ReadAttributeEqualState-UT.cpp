@@ -6,6 +6,7 @@
 #include <Dot++/lexer/TokenInfo.hpp>
 #include <Dot++/parser/states/ReadAttributeEqualState.hpp>
 
+#include <map>
 #include <string>
 #include <utility>
 
@@ -25,24 +26,30 @@ namespace {
         void applyGraphAttribute(const std::string&, const std::string&){}
         void applyVertexAttribute(const std::string&, const std::string&, const std::string&) {}
         
-        void applyEdgeAttribute(const std::string& v1, const std::string& v2, const std::string& attr, const std::string& val)
+        void applyEdgeAttribute(const std::string& v1, const std::string& v2, const std::string& attr, const std::string& value)
         {
-            vertex1 = v1;
-            vertex2 = v2;
-            attribute = attr;
-            value = val;
+            edgeAttributes.insert(std::make_pair(std::make_pair(std::make_pair(v1, v2), attr), value));
         }
         
         void finalize() {}
         
-        std::string vertex1;
-        std::string vertex2;
-        std::string attribute;
-        std::string value;
+        // key: ((v1, v2), attr)
+        std::map<std::pair<std::pair<std::string, std::string>, std::string>, std::string> edgeAttributes;
     };
     
     struct ReadAttributeEqualStateFixture
     {
+        std::string edgeAttribute(const std::string& v1, const std::string& v2, const std::string& attribute)
+        {
+            const auto iter = constructor.edgeAttributes.find(std::make_pair(std::make_pair(v1, v2), attribute));
+            if(iter != constructor.edgeAttributes.end())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Edge Attribute Key Not Found");
+        }
+        
         TokenStack attributes;
         TokenStack stack;
         
@@ -57,8 +64,12 @@ namespace {
     TEST_FIXTURE(ReadAttributeEqualStateFixture, verifyTransitionsToReadLeftBracketOnString)
     {
         std::deque<TokenInfo> tokens;
+        
+        // a -> b -> c -> d [ attribute = value ];
         tokens.emplace_back(Token("a", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("b", TokenType::string), FileInfo("test.dot"));
+        tokens.emplace_back(Token("c", TokenType::string), FileInfo("test.dot"));
+        tokens.emplace_back(Token("d", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("attribute", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("value", TokenType::string), FileInfo("test.dot"));
         
@@ -66,22 +77,33 @@ namespace {
         
         stack.push(handle++);
         stack.push(handle++);
+        stack.push(handle++);
+        stack.push(handle++);
         attributes.push(handle++);
         
         CHECK_EQUAL(1U, attributes.size());
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(4U, stack.size());
         
         CHECK_EQUAL(ParserState::ReadLeftBracket, state.consume(handle++, stack, attributes, constructor));
         
         CHECK_EQUAL(0U, attributes.size());
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(4U, stack.size());
+        
+        REQUIRE CHECK_EQUAL(3U, constructor.edgeAttributes.size());
+        CHECK_EQUAL("value", edgeAttribute("a", "b", "attribute"));
+        CHECK_EQUAL("value", edgeAttribute("b", "c", "attribute"));
+        CHECK_EQUAL("value", edgeAttribute("c", "d", "attribute"));
     }
 
     TEST_FIXTURE(ReadAttributeEqualStateFixture, verifyTransitionsToReadLeftBracketOnStringLiteral)
     {
         std::deque<TokenInfo> tokens;
+        
+        // a -> b -> c [ attribute = value ];
         tokens.emplace_back(Token("a", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("b", TokenType::string), FileInfo("test.dot"));
+        tokens.emplace_back(Token("c", TokenType::string), FileInfo("test.dot"));
+        
         tokens.emplace_back(Token("attribute", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("value", TokenType::string_literal), FileInfo("test.dot"));
         
@@ -89,15 +111,20 @@ namespace {
         
         stack.push(handle++);
         stack.push(handle++);
+        stack.push(handle++);
         attributes.push(handle++);
         
         CHECK_EQUAL(1U, attributes.size());
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(3U, stack.size());
         
         CHECK_EQUAL(ParserState::ReadLeftBracket, state.consume(handle++, stack, attributes, constructor));
         
         CHECK_EQUAL(0U, attributes.size());
-        CHECK_EQUAL(2U, stack.size());
+        CHECK_EQUAL(3U, stack.size());
+        
+        REQUIRE CHECK_EQUAL(2U, constructor.edgeAttributes.size());
+        CHECK_EQUAL("value", edgeAttribute("a", "b", "attribute"));
+        CHECK_EQUAL("value", edgeAttribute("b", "c", "attribute"));
     }
     
     TEST_FIXTURE(ReadAttributeEqualStateFixture, verifyThrowsOnInvalidTokens)
