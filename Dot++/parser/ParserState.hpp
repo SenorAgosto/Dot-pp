@@ -20,7 +20,11 @@ namespace dot_pp { namespace parser {
         ReadGraphAttributeEqual,    // =
         ReadGraphAttributeValue,    // string | string_literal token, pop token, create graph attribute
         
-        ReadLeftBracket,           // [
+        ReadLeftBracketVertexAttribute,
+        ReadVertexAttributeName,
+        ReadVertexAttributeEqual,
+        
+        ReadLeftBracket,            // [
         ReadAttributeName,          // push string token
         ReadAttributeEqual,         // pop token, create adge attribute
     };

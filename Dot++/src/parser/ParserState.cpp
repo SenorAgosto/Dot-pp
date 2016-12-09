@@ -16,6 +16,9 @@ namespace dot_pp { namespace parser {
         case ParserState::CreatedEdge:              return os << "ParserState::CreateEdge";
         case ParserState::ReadGraphAttributeEqual:  return os << "ParserState::ReadGraphAttributeEqual";
         case ParserState::ReadGraphAttributeValue:  return os << "ParserState::ReadGraphAttributeValue";
+        case ParserState::ReadLeftBracketVertexAttribute: return os << "ParserState::ReadLeftBracketVertexAttribute";
+        case ParserState::ReadVertexAttributeName:  return os << "ParserState::ReadVertexAttributeName";
+        case ParserState::ReadVertexAttributeEqual: return os << "ParserState::ReadVertexAttributeEqual";
         case ParserState::ReadLeftBracket:          return os << "ParserState::ReadLeftBracket";
         case ParserState::ReadAttributeName:        return os << "ParserState::ReadAttributeName";
         case ParserState::ReadAttributeEqual:       return os << "ParserState::ReadAttributeEqual";
