@@ -5,6 +5,8 @@
 #include <Dot++/lexer/Token.hpp>
 #include <Dot++/lexer/TokenType.hpp>
 
+#include <vector>
+
 namespace dot_pp { namespace parser { namespace states {
 
     template<class ConstructionPolicy>
@@ -17,55 +19,30 @@ namespace dot_pp { namespace parser { namespace states {
             
             if((token.type() == lexer::TokenType::string) || (token.type() == lexer::TokenType::string_literal))
             {
-                TokenStack temp;
-
                 const auto attribute = attributes.top();
                 const auto attributeToken = attribute->token();
                 attributes.pop();
-                
-                auto v2 = stack.top();
-                auto v2Token = v2->token();
-                
-                temp.push(v2);
-                stack.pop();
-                
-                do
-                {
-                    const auto v1 = stack.top();
-                    const auto v1Token = v1->token();
-                    
-                    constructor.applyEdgeAttribute(v1Token.to_string(), v2Token.to_string(), attributeToken.to_string(), token.to_string());
-                    
-                    v2 = v1;
-                    v2Token = v1Token;
 
-                    temp.push(stack.top());
-                    stack.pop();
-                    
-                } while(!stack.empty());
-                
-                while(!temp.empty())
+                std::vector<TokenInfoHandle> tokens;
+                while(!stack.empty())
                 {
-                    stack.push(temp.top());
-                    temp.pop();
+                    tokens.push_back(stack.top());
+                    stack.pop();
                 }
                 
-                /*
-                const auto attribute = attributes.top();
-                const auto attributeToken = attribute->token();
-                attributes.pop();
+                for(std::size_t v2 = 0, v1 = 1, end = tokens.size(); v1 < end; ++v2, ++v1)
+                {
+                    const auto v1Token = tokens[v1]->token();
+                    const auto v2Token = tokens[v2]->token();
+                    
+                    constructor.applyEdgeAttribute(v1Token.to_string(), v2Token.to_string(), attributeToken.to_string(), token.to_string());
+                }
+
+                for(auto iter = tokens.crbegin(), end = tokens.crend(); iter != end; ++iter)
+                {
+                    stack.push(*iter);
+                }
                 
-                const auto v2 = stack.top();
-                const auto v2Token = v2->token();
-                stack.pop();
-                
-                const auto v1 = stack.top();
-                const auto v1Token = v1->token();
-                
-                stack.push(v2);
-                
-                constructor.applyEdgeAttribute(v1Token.to_string(), v2Token.to_string(), attributeToken.to_string(), token.to_string());
-                */
                 return ParserState::ReadLeftBracket;
             }
             
