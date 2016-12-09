@@ -39,7 +39,7 @@ namespace {
         
         void applyEdgeAttribute(const std::string& vertex1, const std::string& vertex2, const std::string& attributeName, const std::string& value)
         {
-            edgeAttributes.insert(std::make_pair(std::make_pair(std::make_pair(vertex1, vertex2), attributeName), std::make_pair(attributeName, value)));
+            edgeAttributes.insert(std::make_pair(std::make_pair(std::make_pair(vertex1, vertex2), attributeName), value));
         }
         
         void finalize()
@@ -59,7 +59,7 @@ namespace {
         std::map<std::pair<std::string, std::string>, std::string> vertexAttributes;
         
         // key: ((v1, v2), attribute)
-        std::map<std::pair<std::pair<std::string, std::string>, std::string>, std::pair<std::string, std::string> > edgeAttributes;
+        std::map<std::pair<std::pair<std::string, std::string>, std::string>, std::string> edgeAttributes;
         
         bool finalized;
     };
@@ -102,6 +102,17 @@ namespace {
             }
             
             throw std::runtime_error("Vertex Attribute Key Not Found");
+        }
+        
+        std::string edgeAttribute(const std::string& v1, const std::string& v2, const std::string attribute)
+        {
+            const auto iter = graph.edgeAttributes.find(std::make_pair(std::make_pair(v1, v2), attribute));
+            if(iter != graph.edgeAttributes.cend())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Edge Attribute Key Not Found");
         }
         
         GraphMock graph;
@@ -163,10 +174,10 @@ namespace {
             "\t" "b [ color = \"blue\" weight=3.2] ;\n"
             "\n"
             "// define some edges...\n"
-            "\t" "a -> b -> c -> d -> e [ weight  =  \"1.0\"  ]; \t \r \n"
+            "\t" "a -> b -> c -> d -> e [ weight  =  \"1.0\" color=red ]; \t \r \n"
             "\t" "a -> c -> e  [ weight = 2 ];"
             "\t" "b -> f;" "\n"
-            "\t" "{ rank = same; A; B; C;\n"
+            "\t" "{ rank = same; A; B; C; }\n"
             "}\r\n");
         
         parser.parse(ss, filename, graph);
@@ -194,5 +205,19 @@ namespace {
         CHECK_EQUAL("red", vertexAttribute("a", "color"));
         CHECK_EQUAL("blue", vertexAttribute("b", "color"));
         CHECK_EQUAL("3.2", vertexAttribute("b", "weight"));
+        
+        CHECK_EQUAL(12U, graph.edgeAttributes.size());
+        CHECK_EQUAL("1.0", edgeAttribute("a", "b", "weight"));
+        CHECK_EQUAL("1.0", edgeAttribute("b", "c", "weight"));
+        CHECK_EQUAL("1.0", edgeAttribute("c", "d", "weight"));
+        CHECK_EQUAL("1.0", edgeAttribute("d", "e", "weight"));
+
+        CHECK_EQUAL("red", edgeAttribute("a", "b", "color"));
+        CHECK_EQUAL("red", edgeAttribute("b", "c", "color"));
+        CHECK_EQUAL("red", edgeAttribute("c", "d", "color"));
+        CHECK_EQUAL("red", edgeAttribute("d", "e", "color"));
+        
+        CHECK_EQUAL("2", edgeAttribute("a", "c", "weight"));
+        CHECK_EQUAL("2", edgeAttribute("c", "e", "weight"));
     }
 }
