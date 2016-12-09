@@ -93,6 +93,17 @@ namespace {
             return graph.edges.find(std::make_pair(v1, v2)) != graph.edges.end();
         }
         
+        std::string graphAttribute(const std::string& attribute)
+        {
+            const auto iter = graph.graphAttributes.find(attribute);
+            if(iter != graph.graphAttributes.cend())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Graph Attribute Key Not Found");
+        }
+        
         std::string vertexAttribute(const std::string& vertex, const std::string& attribute)
         {
             const auto iter = graph.vertexAttributes.find(std::make_pair(vertex, attribute));
@@ -169,6 +180,9 @@ namespace {
             "*/ \n\n"
             "digraph stages {" "\n"
             "\n"
+            "// define graph attribuetes \n"
+            "\t" "size = \"100,100\"; \n"
+            "\t" "position= center  ; " "\n"
             "// define vertices with attributes \n"
             "\t" "a [ color=red];"
             "\t" "b [ color = \"blue\" weight=3.2] ;\n"
@@ -200,6 +214,10 @@ namespace {
         CHECK(hasEdge("a", "c"));
         CHECK(hasEdge("c", "e"));
         CHECK(hasEdge("b", "f"));
+        
+        CHECK_EQUAL(2U, graph.graphAttributes.size());
+        CHECK_EQUAL("100,100", graphAttribute("size"));
+        CHECK_EQUAL("center", graphAttribute("position"));
         
         CHECK_EQUAL(3U, graph.vertexAttributes.size());
         CHECK_EQUAL("red", vertexAttribute("a", "color"));
