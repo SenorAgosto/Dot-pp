@@ -41,6 +41,7 @@ namespace {
 
         auto handle = tokens.cbegin();
         
+        // we share this state with graph attributes
         CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
