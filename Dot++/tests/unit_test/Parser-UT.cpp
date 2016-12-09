@@ -34,12 +34,12 @@ namespace {
         
         void applyVertexAttribute(const std::string& vertex, const std::string& attributeName, const std::string& value)
         {
-            vertexAttributes.insert(std::make_pair(vertex, std::make_pair(attributeName, value)));
+            vertexAttributes.insert(std::make_pair(std::make_pair(vertex, attributeName), value));
         }
         
         void applyEdgeAttribute(const std::string& vertex1, const std::string& vertex2, const std::string& attributeName, const std::string& value)
         {
-            edgeAttributes.insert(std::make_pair(std::make_pair(vertex1, vertex2), std::make_pair(attributeName, value)));
+            edgeAttributes.insert(std::make_pair(std::make_pair(std::make_pair(vertex1, vertex2), attributeName), std::make_pair(attributeName, value)));
         }
         
         void finalize()
@@ -54,8 +54,12 @@ namespace {
         std::set<std::pair<std::string, std::string>> edges;
         
         std::map<std::string, std::string> graphAttributes;
-        std::map<std::string, std::pair<std::string, std::string>> vertexAttributes;
-        std::map<std::pair<std::string, std::string>, std::pair<std::string, std::string> > edgeAttributes;
+        
+        // key: (vertex, attribute)
+        std::map<std::pair<std::string, std::string>, std::string> vertexAttributes;
+        
+        // key: ((v1, v2), attribute)
+        std::map<std::pair<std::pair<std::string, std::string>, std::string>, std::pair<std::string, std::string> > edgeAttributes;
         
         bool finalized;
     };
@@ -79,14 +83,25 @@ namespace {
             CHECK(graph.edgeAttributes.empty());
         }
 
-        bool hasVertex(const std::set<std::string>& set, const std::string& key)
+        bool hasVertex(const std::string& key)
         {
-            return set.find(key) != set.end();
+            return graph.vertices.find(key) != graph.vertices.end();
         }
         
-        bool hasEdge(const std::set<std::pair<std::string, std::string>>& map, const std::string& v1, const std::string& v2)
+        bool hasEdge(const std::string& v1, const std::string& v2)
         {
-            return map.find(std::make_pair(v1, v2)) != map.end();
+            return graph.edges.find(std::make_pair(v1, v2)) != graph.edges.end();
+        }
+        
+        std::string vertexAttribute(const std::string& vertex, const std::string& attribute)
+        {
+            const auto iter = graph.vertexAttributes.find(std::make_pair(vertex, attribute));
+            if(iter != graph.vertexAttributes.cend())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Vertex Attribute Key Not Found");
         }
         
         GraphMock graph;
@@ -143,12 +158,10 @@ namespace {
             "*/ \n\n"
             "digraph stages {" "\n"
             "\n"
-            /*
             "// define vertices with attributes \n"
             "\t" "a [ color=red];"
-            "\t" "b [ color = \"blue\"] ;\n"
+            "\t" "b [ color = \"blue\" weight=3.2] ;\n"
             "\n"
-            */
             "// define some edges...\n"
             "\t" "a -> b -> c -> d -> e [ weight  =  \"1.0\"  ]; \t \r \n"
             "\t" "a -> c -> e  [ weight = 2 ];"
@@ -161,20 +174,25 @@ namespace {
         CHECK_EQUAL("stages", graph.digraphName);
         
         REQUIRE CHECK_EQUAL(6U, graph.vertices.size());
-        CHECK(hasVertex(graph.vertices, "a"));
-        CHECK(hasVertex(graph.vertices, "b"));
-        CHECK(hasVertex(graph.vertices, "c"));
-        CHECK(hasVertex(graph.vertices, "d"));
-        CHECK(hasVertex(graph.vertices, "e"));
-        CHECK(hasVertex(graph.vertices, "f"));
+        CHECK(hasVertex("a"));
+        CHECK(hasVertex("b"));
+        CHECK(hasVertex("c"));
+        CHECK(hasVertex("d"));
+        CHECK(hasVertex("e"));
+        CHECK(hasVertex("f"));
         
         CHECK_EQUAL(7U, graph.edges.size());
-        CHECK(hasEdge(graph.edges, "a", "b"));
-        CHECK(hasEdge(graph.edges, "b", "c"));
-        CHECK(hasEdge(graph.edges, "c", "d"));
-        CHECK(hasEdge(graph.edges, "d", "e"));
-        CHECK(hasEdge(graph.edges, "a", "c"));
-        CHECK(hasEdge(graph.edges, "c", "e"));
-        CHECK(hasEdge(graph.edges, "b", "f"));
+        CHECK(hasEdge("a", "b"));
+        CHECK(hasEdge("b", "c"));
+        CHECK(hasEdge("c", "d"));
+        CHECK(hasEdge("d", "e"));
+        CHECK(hasEdge("a", "c"));
+        CHECK(hasEdge("c", "e"));
+        CHECK(hasEdge("b", "f"));
+        
+        CHECK_EQUAL(3U, graph.vertexAttributes.size());
+        CHECK_EQUAL("red", vertexAttribute("a", "color"));
+        CHECK_EQUAL("blue", vertexAttribute("b", "color"));
+        CHECK_EQUAL("3.2", vertexAttribute("b", "weight"));
     }
 }
