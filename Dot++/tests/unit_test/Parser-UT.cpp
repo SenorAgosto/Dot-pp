@@ -224,7 +224,7 @@ namespace {
         CHECK_EQUAL("blue", vertexAttribute("b", "color"));
         CHECK_EQUAL("3.2", vertexAttribute("b", "weight"));
         
-        CHECK_EQUAL(12U, graph.edgeAttributes.size());
+        CHECK_EQUAL(10U, graph.edgeAttributes.size());
         CHECK_EQUAL("1.0", edgeAttribute("a", "b", "weight"));
         CHECK_EQUAL("1.0", edgeAttribute("b", "c", "weight"));
         CHECK_EQUAL("1.0", edgeAttribute("c", "d", "weight"));
