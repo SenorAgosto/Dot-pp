@@ -16,7 +16,10 @@
 #include <Dot++/parser/states/ReadGraphAttributeEqualState.hpp>
 #include <Dot++/parser/states/ReadGraphAttributeValueState.hpp>
 #include <Dot++/parser/states/ReadLeftBracketState.hpp>
+#include <Dot++/parser/states/ReadLeftBracketVertexAttributeState.hpp>
 #include <Dot++/parser/states/ReadStringTokenState.hpp>
+#include <Dot++/parser/states/ReadVertexAttributeNameState.hpp>
+#include <Dot++/parser/states/ReadVertexAttributeEqualState.hpp>
 
 namespace dot_pp { namespace parser {
     
@@ -38,6 +41,9 @@ namespace dot_pp { namespace parser {
             case ParserState::CreatedEdge:                  return createEdge_.consume(token, stack, constructor);
             case ParserState::ReadGraphAttributeEqual:      return readGraphAttributeEqual_.consume(token, stack, constructor);
             case ParserState::ReadGraphAttributeValue:      return readGraphAttributeValue_.consume(token, stack, constructor);
+            case ParserState::ReadLeftBracketVertexAttribute: return leftBracketVertexAttribute_.consume(token, stack, constructor);
+            case ParserState::ReadVertexAttributeName:      return vertexAttributeName_.consume(token, stack, constructor);
+            case ParserState::ReadVertexAttributeEqual:     return vertexAttributeEqual_.consume(token, stack, constructor);
             case ParserState::ReadLeftBracket:              return readLeftBracket_.consume(token, stack, constructor);
             case ParserState::ReadAttributeName:            return readAttributeName_.consume(token, stack, constructor);
             case ParserState::ReadAttributeEqual:           return readAttributeEqual_.consume(token, stack, constructor);
@@ -64,6 +70,11 @@ namespace dot_pp { namespace parser {
         
         states::ReadGraphAttributeEqualState<ConstructionPolicy> readGraphAttributeEqual_;
         states::ReadGraphAttributeValueState<ConstructionPolicy> readGraphAttributeValue_;
+        
+        states::ReadLeftBracketVertexAttributeState<ConstructionPolicy> leftBracketVertexAttribute_;
+        states::ReadVertexAttributeNameState<ConstructionPolicy> vertexAttributeName_;
+        states::ReadVertexAttributeEqualState<ConstructionPolicy> vertexAttributeEqual_;
+        
         states::IgnoreSubgraphsState<ConstructionPolicy> ignoreSubgraphs_;
     };
 }}
