@@ -29,6 +29,11 @@ namespace dot_pp { namespace parser { namespace states {
             {
                 return ParserState::ReadGraphAttributeEqual;
             }
+        
+            if(token.type() == lexer::TokenType::l_bracket)
+            {
+                return ParserState::ReadLeftBracketVertexAttribute;
+            }
             
             throw dot_pp::SyntaxError("Unexpected token encountered, expected '--', '->', '=', or '[', found '" + token.to_string() + "'", *handle);
         }

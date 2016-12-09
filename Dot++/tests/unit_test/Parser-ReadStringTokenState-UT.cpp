@@ -82,6 +82,17 @@ namespace {
         CHECK_EQUAL(ParserState::ReadGraphAttributeEqual, state.consume(handle++, stack, constructor));
         CHECK_EQUAL(0U, stack.size());
     }
+
+    TEST_FIXTURE(ReadStringTokenStateFixture, verifyTransitionsToReadLeftBracketVertexAttributeOnLeftBracket)
+    {
+        std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("[", TokenType::l_bracket), FileInfo("test.dot"));
+
+        auto handle = tokens.cbegin();
+        
+        CHECK_EQUAL(ParserState::ReadLeftBracketVertexAttribute, state.consume(handle++, stack, constructor));
+        CHECK_EQUAL(0U, stack.size());
+    }
     
     TEST_FIXTURE(ReadStringTokenStateFixture, verifyThrowsOnInvalidTokens)
     {
@@ -91,7 +102,6 @@ namespace {
         tokens.emplace_back(Token("string_lit", TokenType::string_literal), FileInfo("test.dot"));
         tokens.emplace_back(Token("l_paren", TokenType::l_paren), FileInfo("test.dot"));
         tokens.emplace_back(Token("r_paren", TokenType::r_paren), FileInfo("test.dot"));
-        tokens.emplace_back(Token("l_bracket", TokenType::l_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("r_bracket", TokenType::r_bracket), FileInfo("test.dot"));
         tokens.emplace_back(Token("end_statement", TokenType::end_statement), FileInfo("test.dot"));
         tokens.emplace_back(Token("blah blah", TokenType::comment), FileInfo("test.dot"));
