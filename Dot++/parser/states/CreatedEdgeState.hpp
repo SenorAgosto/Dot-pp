@@ -28,7 +28,6 @@ namespace dot_pp { namespace parser { namespace states {
             
             if(token.type() == lexer::TokenType::l_bracket)
             {
-                stack.pop();
                 return ParserState::ReadLeftBracket;
             }
             
