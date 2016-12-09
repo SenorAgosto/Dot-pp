@@ -76,11 +76,18 @@ namespace {
     TEST_FIXTURE(ReadStringTokenStateFixture, verifyTransitionsToReadGraphAttributeEqual)
     {
         std::deque<TokenInfo> tokens;
+        tokens.emplace_back(Token("attribute", TokenType::string), FileInfo("test.dot"));
         tokens.emplace_back(Token("=", TokenType::equal), FileInfo("test.dot"));
 
         auto handle = tokens.cbegin();
+        stack.push(handle++);
+        
+        CHECK_EQUAL(0U, attributes.size());
+        CHECK_EQUAL(1U, stack.size());
         
         CHECK_EQUAL(ParserState::ReadGraphAttributeEqual, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(1U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
     }
 

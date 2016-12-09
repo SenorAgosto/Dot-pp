@@ -11,7 +11,7 @@ namespace dot_pp { namespace parser { namespace states {
     class ReadStringTokenState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy& constructor) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack& attributes, ConstructionPolicy& constructor) override
         {
             const auto& token = handle->token();
         
@@ -27,6 +27,11 @@ namespace dot_pp { namespace parser { namespace states {
         
             if(token.type() == lexer::TokenType::equal)
             {
+                // migrate stack top to attribute stack since we now
+                // know it's an attribute name.
+                attributes.push(stack.top());
+                stack.pop();
+                
                 return ParserState::ReadGraphAttributeEqual;
             }
         

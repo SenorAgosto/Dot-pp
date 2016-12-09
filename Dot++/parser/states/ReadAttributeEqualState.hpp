@@ -11,15 +11,15 @@ namespace dot_pp { namespace parser { namespace states {
     class ReadAttributeEqualState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy& constructor) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack& attributes, ConstructionPolicy& constructor) override
         {
             const auto& token = handle->token();
             
             if((token.type() == lexer::TokenType::string) || (token.type() == lexer::TokenType::string_literal))
             {
-                const auto attribute = stack.top();
+                const auto attribute = attributes.top();
                 const auto attributeToken = attribute->token();
-                stack.pop();
+                attributes.pop();
                 
                 const auto v2 = stack.top();
                 const auto v2Token = v2->token();

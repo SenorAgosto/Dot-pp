@@ -11,13 +11,15 @@ namespace dot_pp { namespace parser { namespace states {
     class ReadGraphAttributeValueState : public ParserStateInterface<ConstructionPolicy>
     {
     public:
-        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack&, ConstructionPolicy&) override
+        ParserState consume(const TokenInfoHandle& handle, TokenStack& stack, TokenStack& attributes, ConstructionPolicy&) override
         {
             const auto& token = handle->token();
             
             if(token.type() == lexer::TokenType::end_statement)
             {
                 clear(stack);
+                clear(attributes);
+                
                 return ParserState::BeginGraph;
             }
             

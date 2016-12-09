@@ -34,9 +34,13 @@ namespace {
         
         auto handle = tokens.cbegin();
         
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadAttributeName, state.consume(handle++, stack, attributes, constructor));
-        CHECK_EQUAL(1U, stack.size());
+        
+        CHECK_EQUAL(1U, attributes.size());
+        CHECK_EQUAL(0U, stack.size());
     }
 
     TEST_FIXTURE(ReadLeftBracketStateFixture, verifyTransitionsToGraphAttributeValueRightBracket)
@@ -46,8 +50,12 @@ namespace {
         
         auto handle = tokens.cbegin();
         
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
+        
         CHECK_EQUAL(ParserState::ReadGraphAttributeValue, state.consume(handle++, stack, attributes, constructor));
+        
+        CHECK_EQUAL(0U, attributes.size());
         CHECK_EQUAL(0U, stack.size());
     }
     
