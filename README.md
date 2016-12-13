@@ -35,6 +35,8 @@ For example:
             , const std::string& vertex2
             , const std::string& attributeName
             , const std::string& value);
+
+        void finalize();
     };
 
 The implementation of this interface would deal with the specifics of the client's graph library. 
