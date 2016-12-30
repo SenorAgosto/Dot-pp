@@ -33,6 +33,14 @@ namespace dot_pp {
             stream_ << "];\n";
         }
         
+        template<typename... AttributeList>
+        void applyEdgeAttributes(const std::string& vertex1, const std::string& vertex2, AttributeList&&... attributes)
+        {
+            stream_ << "\t" << vertex1 << " " << edgeStyle_ << " " << vertex2 << " [";
+            printAttributes(std::forward<AttributeList>(attributes)...);
+            stream_ << "];\n";
+        }
+        
         void finalize();
         
     private:
