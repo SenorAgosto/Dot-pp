@@ -128,4 +128,31 @@ namespace {
         
         CHECK_EQUAL("digraph {\n\tv1 [filename=test.cpp type=Header color=\"blue\" ];\n}\n", output.str());
     }
+    
+    TEST_FIXTURE(SerializationFixture, verifyApplyEdgeAttributes)
+    {
+        archive.createDigraph();
+        archive.applyEdgeAttributes("v1", "v2", std::make_pair("filename", "test.cpp"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 -> v2 [filename=test.cpp ];\n}\n", output.str());
+    }
+
+    TEST_FIXTURE(SerializationFixture, verifyApplyEdgeAttributesWithTwoAttributes)
+    {
+        archive.createDigraph();
+        archive.applyEdgeAttributes("v1", "v2", std::make_pair("filename", "test.cpp"), std::make_pair("type", "Header"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 -> v2 [filename=test.cpp type=Header ];\n}\n", output.str());
+    }
+
+    TEST_FIXTURE(SerializationFixture, verifyApplyEdgeAttributesWithThreeAttributes)
+    {
+        archive.createDigraph();
+        archive.applyEdgeAttributes("v1", "v2", std::make_pair("filename", "test.cpp"), std::make_pair("type", "Header"), std::make_pair("color", "\"blue\""));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 -> v2 [filename=test.cpp type=Header color=\"blue\" ];\n}\n", output.str());
+    }
 }
