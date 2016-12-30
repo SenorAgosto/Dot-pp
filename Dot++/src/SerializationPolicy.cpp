@@ -38,6 +38,11 @@ namespace dot_pp {
         stream_ << "\t" << attributeName << "=" << value << ";\n";
     }
     
+    void SerializationPolicy::printAttribute(const Attribute& attribute)
+    {
+        stream_ << attribute.first << "=" << attribute.second << " ";
+    }
+    
     void SerializationPolicy::createEdge(const std::string& vertex1, const std::string& vertex2, const std::string& attributeName, const std::string& value)
     {
         stream_ << "\t" << vertex1 << " " << edgeStyle_ << " " << vertex2 << " [" << attributeName << "=" << value << "];\n";

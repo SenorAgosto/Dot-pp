@@ -101,4 +101,31 @@ namespace {
         
         CHECK_EQUAL("digraph {\n\tv1 -> v2 [label=foo];\n}\n", output.str());
     }
+    
+    TEST_FIXTURE(SerializationFixture, verifyApplyVertexAttributes)
+    {
+        archive.createDigraph();
+        archive.applyVertexAttributes("v1", std::make_pair("filename", "test.cpp"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 [filename=test.cpp ];\n}\n", output.str());
+    }
+
+    TEST_FIXTURE(SerializationFixture, verifyApplyVertexAttributesWithTwoAttributes)
+    {
+        archive.createDigraph();
+        archive.applyVertexAttributes("v1", std::make_pair("filename", "test.cpp"), std::make_pair("type", "Header"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 [filename=test.cpp type=Header ];\n}\n", output.str());
+    }
+
+    TEST_FIXTURE(SerializationFixture, verifyApplyVertexAttributesWithThreeAttributes)
+    {
+        archive.createDigraph();
+        archive.applyVertexAttributes("v1", std::make_pair("filename", "test.cpp"), std::make_pair("type", "Header"), std::make_pair("color", "\"blue\""));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tv1 [filename=test.cpp type=Header color=\"blue\" ];\n}\n", output.str());
+    }
 }
