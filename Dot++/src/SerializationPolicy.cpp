@@ -48,6 +48,11 @@ namespace dot_pp {
         stream_ << "\t" << vertex1 << " " << edgeStyle_ << " " << vertex2 << " [" << attributeName << "=" << value << "];\n";
     }
     
+    void SerializationPolicy::blankLine()
+    {
+        stream_ << "\n";
+    }
+    
     void SerializationPolicy::finalize()
     {
         stream_ << "}" << std::endl;
