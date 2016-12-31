@@ -155,4 +155,13 @@ namespace {
         
         CHECK_EQUAL("digraph {\n\tv1 -> v2 [filename=test.cpp type=Header color=\"blue\" ];\n}\n", output.str());
     }
+    
+    TEST_FIXTURE(SerializationFixture, verifyBlankLine)
+    {
+        archive.createDigraph();
+        archive.blankLine();
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\n}\n", output.str());
+    }
 }

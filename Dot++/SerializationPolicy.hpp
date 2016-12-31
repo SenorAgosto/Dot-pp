@@ -41,6 +41,7 @@ namespace dot_pp {
             stream_ << "];\n";
         }
         
+        void blankLine();
         void finalize();
         
     private:
