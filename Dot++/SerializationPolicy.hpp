@@ -26,6 +26,22 @@ namespace dot_pp {
         void applyGraphAttribute(const std::string& attributeName, const std::string& value);
         
         template<typename... AttributeList>
+        void defaultVertexAttributes(AttributeList&&... attributes)
+        {
+            stream_ << "\t" << "node [";
+            printAttributes(std::forward<AttributeList>(attributes)...);
+            stream_ << "];\n";
+        }
+
+        template<typename... AttributeList>
+        void defaultEdgeAttributes(AttributeList&&... attributes)
+        {
+            stream_ << "\t" << "edge [";
+            printAttributes(std::forward<AttributeList>(attributes)...);
+            stream_ << "];\n";
+        }
+
+        template<typename... AttributeList>
         void applyVertexAttributes(const std::string& vertex, AttributeList&&... attributes)
         {
             stream_ << "\t" << vertex << " [";
