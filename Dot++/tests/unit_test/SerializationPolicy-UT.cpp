@@ -164,4 +164,22 @@ namespace {
         
         CHECK_EQUAL("digraph {\n\n}\n", output.str());
     }
+    
+    TEST_FIXTURE(SerializationFixture, verifyDefaultNodeAttribute)
+    {
+        archive.createDigraph();
+        archive.defaultVertexAttributes(std::make_pair("fontsize", "8"), std::make_pair("color", "black"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tnode [fontsize=8 color=black ];\n}\n", output.str());
+    }
+    
+    TEST_FIXTURE(SerializationFixture, verifyDefaultEdgeAttribute)
+    {
+        archive.createDigraph();
+        archive.defaultEdgeAttributes(std::make_pair("fontsize", "8"), std::make_pair("color", "black"));
+        archive.finalize();
+        
+        CHECK_EQUAL("digraph {\n\tedge [fontsize=8 color=black ];\n}\n", output.str());
+    }
 }
