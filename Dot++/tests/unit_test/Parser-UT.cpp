@@ -32,9 +32,19 @@ namespace {
             graphAttributes.insert(std::make_pair(attributeName, value));
         }
         
+        void applyDefaultVertexAttribute(const std::string& attributeName, const std::string& value)
+        {
+            defaultVertexAttributes.insert(std::make_pair(attributeName, value));
+        }
+        
         void applyVertexAttribute(const std::string& vertex, const std::string& attributeName, const std::string& value)
         {
             vertexAttributes.insert(std::make_pair(std::make_pair(vertex, attributeName), value));
+        }
+        
+        void applyDefaultEdgeAttribute(const std::string& attributeName, const std::string& value)
+        {
+            defaultEdgeAttributes.insert(std::make_pair(attributeName, value));
         }
         
         void applyEdgeAttribute(const std::string& vertex1, const std::string& vertex2, const std::string& attributeName, const std::string& value)
@@ -55,8 +65,14 @@ namespace {
         
         std::map<std::string, std::string> graphAttributes;
         
+        // key: attributeName
+        std::map<std::string, std::string> defaultVertexAttributes;
+        
         // key: (vertex, attribute)
         std::map<std::pair<std::string, std::string>, std::string> vertexAttributes;
+        
+        // key: attributeName
+        std::map<std::string, std::string> defaultEdgeAttributes;
         
         // key: ((v1, v2), attribute)
         std::map<std::pair<std::pair<std::string, std::string>, std::string>, std::string> edgeAttributes;
@@ -79,7 +95,9 @@ namespace {
             CHECK(graph.vertices.empty());
             CHECK(graph.edges.empty());
             CHECK(graph.graphAttributes.empty());
+            CHECK(graph.defaultVertexAttributes.empty());
             CHECK(graph.vertexAttributes.empty());
+            CHECK(graph.defaultEdgeAttributes.empty());
             CHECK(graph.edgeAttributes.empty());
         }
 
@@ -104,6 +122,17 @@ namespace {
             throw std::runtime_error("Graph Attribute Key Not Found");
         }
         
+        std::string defaultVertexAttribute(const std::string& attribute)
+        {
+            const auto iter = graph.defaultVertexAttributes.find(attribute);
+            if(iter != graph.defaultVertexAttributes.end())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Default Vertex Attribute Key Not Found");
+        }
+        
         std::string vertexAttribute(const std::string& vertex, const std::string& attribute)
         {
             const auto iter = graph.vertexAttributes.find(std::make_pair(vertex, attribute));
@@ -113,6 +142,17 @@ namespace {
             }
             
             throw std::runtime_error("Vertex Attribute Key Not Found");
+        }
+        
+        std::string defaultEdgeAttribute(const std::string& attribute)
+        {
+            const auto iter = graph.defaultEdgeAttributes.find(attribute);
+            if(iter != graph.defaultEdgeAttributes.end())
+            {
+                return iter->second;
+            }
+            
+            throw std::runtime_error("Default Edge Attribute Key Not Found");
         }
         
         std::string edgeAttribute(const std::string& v1, const std::string& v2, const std::string attribute)
@@ -183,6 +223,10 @@ namespace {
             "// define graph attribuetes \n"
             "\t" "size = \"100,100\"; \n"
             "\t" "position= center  ; " "\n"
+            "\t" "// define default attributes \n"
+            "\t" "node [ color=black fontsize=10];" "\n"
+            "\t" "edge [ color=blue fontsize=8 ];" "\n"
+            "\n"
             "// define vertices with attributes \n"
             "\t" "a [ color=red];"
             "\t" "b [ color = \"blue\" weight=3.2] ;\n"
@@ -219,10 +263,18 @@ namespace {
         CHECK_EQUAL("100,100", graphAttribute("size"));
         CHECK_EQUAL("center", graphAttribute("position"));
         
+        CHECK_EQUAL(2U, graph.defaultVertexAttributes.size());
+        CHECK_EQUAL("black", defaultVertexAttribute("color"));
+        CHECK_EQUAL("10", defaultVertexAttribute("fontsize"));
+        
         CHECK_EQUAL(3U, graph.vertexAttributes.size());
         CHECK_EQUAL("red", vertexAttribute("a", "color"));
         CHECK_EQUAL("blue", vertexAttribute("b", "color"));
         CHECK_EQUAL("3.2", vertexAttribute("b", "weight"));
+        
+        CHECK_EQUAL(2U, graph.defaultEdgeAttributes.size());
+        CHECK_EQUAL("blue", defaultEdgeAttribute("color"));
+        CHECK_EQUAL("8", defaultEdgeAttribute("fontsize"));
         
         CHECK_EQUAL(10U, graph.edgeAttributes.size());
         CHECK_EQUAL("1.0", edgeAttribute("a", "b", "weight"));

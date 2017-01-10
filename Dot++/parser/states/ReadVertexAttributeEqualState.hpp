@@ -23,6 +23,19 @@ namespace dot_pp { namespace parser { namespace states {
                 
                 const auto vertex = stack.top();
                 const auto vertexToken = vertex->token();
+                const auto vertexName = vertexToken.to_string();
+                
+                if(vertexName == "node")
+                {
+                    constructor.applyDefaultVertexAttribute(attributeToken.to_string(), token.to_string());
+                    return ParserState::ReadLeftBracketVertexAttribute;
+                }
+                
+                if(vertexName == "edge")
+                {
+                    constructor.applyDefaultEdgeAttribute(attributeToken.to_string(), token.to_string());
+                    return ParserState::ReadLeftBracketVertexAttribute;
+                }
                 
                 constructor.applyVertexAttribute(vertexToken.to_string(), attributeToken.to_string(), token.to_string());
                 return ParserState::ReadLeftBracketVertexAttribute;
