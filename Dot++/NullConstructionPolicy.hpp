@@ -12,8 +12,11 @@ namespace dot_pp {
         void createEdge(const std::string&, const std::string&){}
         
         void applyGraphAttribute(const std::string&, const std::string&){}
+        
+        void applyDefaultVertexAttribute(const std::string&, const std::string&) {}
         void applyVertexAttribute(const std::string&, const std::string&, const std::string&) {}
         
+        void applyDefaultEdgeAttribute(const std::string&, const std::string) {}
         void applyEdgeAttribute(const std::string&, const std::string&, const std::string&, const std::string&) {}
         
         void finalize() {}
