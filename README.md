@@ -1,17 +1,15 @@
 # Dot++
 
-A small library for reading DOT graph files and serializing graphs into DOT files. We support a subset of DOT: 
+A small library for reading DOT graph files and serializing graphs into DOT files. We support a subset of DOT when parsing: 
 
 - we require an semicolon at the end of each line
 - we don't support subgraphs
 - we don't support position attributes 
-- we will support multiple graphs per input file, your `ConstructionPolicy` should be prepared to deal with that scenario.
+- we will support multiple graphs per input file, your construction policy (see below) should be prepared to deal with that scenario should your input files fall into this catagory. 
 
-### Use 
+### Graph Construction from DOT files 
 
-Client code implements a `ConstructionPolicy` to be called into by the DOT parser. The policy is passed to the DOT parser as a template parameter. 
-
-For example:
+The DOT parser is parameterized on a client construction policy and calls into the policy as a DOT input is parsed. The following is an example construction policy:
 
     class ConstructionPolicy {
 
@@ -25,9 +23,17 @@ For example:
               const std::string& attributeName
             , const std::string& value);
 
+        void applyDefaultVertexAttribute(
+              const std::string& attributeName
+            , const std::string& value);
+
         void applyVertexAttribute(
               const std::string& vertex
             , const std::string& attributeName
+            , const std::string& value);
+
+        void applyDefaultEdgeAttribute(
+              const std::string& attributeName
             , const std::string& value);
 
         void applyEdgeAttribute(
@@ -39,9 +45,11 @@ For example:
         void finalize();
     };
 
-The implementation of this interface would deal with the specifics of the client's graph library. 
+The implementation of this interface deals with the specifics of the client's graph library. This policy should be prepared to handle multiple graphs in the event the input DOT file contains multiple top-level graphs. 
 
-Dot++ provides a `SerializationPolicy` mirroring the `ConstructionPolicy` interface which can be called by client code's graph visitor to serialize a graph into the DOT format. 
+### Graph Serialization 
+
+Dot++ provides a serialization policy which can be called by client code to serialize a graph into the DOT format while visiting the graph using the specifics of the graph library. The serialization policy mirrors the construction policy above - see `Dot++/SerializationPolicy.hpp` for details. 
 
 ### Dependencies 
 
