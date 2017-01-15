@@ -26,6 +26,7 @@ namespace dot_pp { namespace parser {
     template<class ConstructionPolicy>
     Parser<ConstructionPolicy>::Parser(ConstructionPolicy& constructor)
         : constructor_(constructor)
+        , state_(ParserState::Init)
     {
     }
     
